@@ -18,9 +18,9 @@ public class Collectable : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
+        Debug.Log("What");
         if (collider.TryGetComponent<Turtle>(out var turtle))
         {
-
             GetComponent<SpriteRenderer>().color = Color.red;
             turtle.collect(cData);
         }
