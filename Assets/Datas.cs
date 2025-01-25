@@ -134,6 +134,7 @@ public class CollectableData
 [Serializable]
 public class ShopData
 {
+    public int shopDepth = 0;
     public List<TurtleUpgrade> items = new();
     public TurtleInventory inventory = new();
 }

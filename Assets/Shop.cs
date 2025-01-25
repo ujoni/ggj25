@@ -20,7 +20,7 @@ public class Shop : MonoBehaviour
         {
             TurtleUpgrade u = new()
             {
-                level = 1,
+                level = i + 1,
                 type = UpgradeType.Speed
             };
 
