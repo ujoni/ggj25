@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
 using System.Runtime.Serialization;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.U2D.IK;
 using UnityEngine.UIElements;
 
 [Serializable]
@@ -19,12 +22,14 @@ public class Turtle : MonoBehaviour
     void Start()
     {
         var ui = FindFirstObjectByType<UIDocument>();
-        ui.rootVisualElement.dataSource = tData;
+        var turtleBar = ui.rootVisualElement.Children().First().Children().Single(element => element.viewDataKey == "TurtleBar");
+        turtleBar.dataSource = tData;
     }
 
     void FixedUpdate()
     {
         GetComponent<Transform>().position += vel;
+        tData.oxygen -= 0.02f;
     }
 
     // Update is called once per frame
@@ -77,8 +82,16 @@ public class Turtle : MonoBehaviour
     }
 
 
-    public void collect(CollectableData c)
+    public void Collect(CollectableData c)
     {
-        Debug.Log("collect");
+        switch (c.collectableType)
+        {
+            case CollectableType.NormalShell:
+                tData.shells += 1;
+                break;
+            case CollectableType.SmallBubble:
+                tData.oxygen = Math.Min(tData.maxOxygen, tData.oxygen + 5);
+                break;
+        }
     }
 }

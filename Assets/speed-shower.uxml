@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Label text="Label" name="spiid" data-source-type="TurtleData, Assembly-CSharp" parse-escape-sequences="false">
-        <Bindings>
-            <ui:DataBinding property="text" data-source-path="speed" data-source-type="TurtleData, Assembly-CSharp" binding-mode="ToTarget" />
-        </Bindings>
-    </ui:Label>
-</ui:UXML>

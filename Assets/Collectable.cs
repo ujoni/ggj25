@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    private bool collected = false;
 
     public CollectableData cData;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,11 +19,12 @@ public class Collectable : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("What");
-        if (collider.TryGetComponent<Turtle>(out var turtle))
+        if (!collected && collider.TryGetComponent<Turtle>(out var turtle))
         {
+            collected = true;
             GetComponent<SpriteRenderer>().color = Color.red;
-            turtle.collect(cData);
+            turtle.Collect(cData);
         }
     }
 }
+
