@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Shop : MonoBehaviour
 {
+
+    private static readonly List<UpgradeType> UPGRADE_TYPES = new() { UpgradeType.CarryingCapacity, UpgradeType.OxygenMaximum, UpgradeType.Speed, UpgradeType.Toughness };
     public VisualTreeAsset listItem;
     // override value when testing the scene to get different depths
     // real runs yoink the value from the sukeltajascript
@@ -27,8 +30,7 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            Debug.Log("Using test turtle data");
-
+            Debug.Log("Using test turtle data. Shells: " + dShop.shells);
         }
 
 
@@ -44,6 +46,7 @@ public class Shop : MonoBehaviour
             remove.clicked += () =>
             {
                 dShop.inventory.ClearSlot(slot.tabIndex);
+                dShop.shells += 1;
             };
         }
 
@@ -54,7 +57,7 @@ public class Shop : MonoBehaviour
             TurtleUpgrade u = new()
             {
                 level = i + 1,
-                type = UpgradeType.Speed
+                type = RandomSelect(UPGRADE_TYPES),
             };
 
             var item = listItem.Instantiate();
@@ -75,6 +78,12 @@ public class Shop : MonoBehaviour
             itemList.hierarchy.Add(item);
             item.dataSource = u;
         }
-
     }
+
+    private static T RandomSelect<T>(List<T> value)
+    {
+        var i = UnityEngine.Random.Range(0, value.Count - 1);
+        return value[i];
+    }
+
 }
