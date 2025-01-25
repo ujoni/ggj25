@@ -84,11 +84,10 @@ public class TurtleUpgrade
     public static void LoadIcons()
     {
         Debug.Log("Loading icons like a baus");
-        var asset = Resources.Load<Sprite>("ball");
-        texturePerType.Add(UpgradeType.CarryingCapacity, asset);
-        texturePerType.Add(UpgradeType.OxygenMaximum, asset);
-        texturePerType.Add(UpgradeType.Speed, asset);
-        texturePerType.Add(UpgradeType.Toughness, asset);
+        texturePerType.Add(UpgradeType.CarryingCapacity, Resources.Load<Sprite>("upgrade_carry"));
+        texturePerType.Add(UpgradeType.OxygenMaximum, Resources.Load<Sprite>("upgrade_happi"));
+        texturePerType.Add(UpgradeType.Speed, Resources.Load<Sprite>("upgrade_speed"));
+        texturePerType.Add(UpgradeType.Toughness, Resources.Load<Sprite>("upgrade_power"));
         texturePerType.Add(UpgradeType.None, null);
     }
 }
