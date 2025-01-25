@@ -8,12 +8,25 @@ public class Shop : MonoBehaviour
 {
     public VisualTreeAsset listItem;
     public ShopData dShop = new();
+    public TurtleData turtleDataRef = new();
     private VisualElement root;
     private VisualElement[] inventorySlots = new VisualElement[13];
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        var sukeltaja = FindFirstObjectByType<sukeltajascript>();
+
+        if (sukeltaja != null)
+        {
+            Debug.Log("Using real turtle data");
+            turtleDataRef = sukeltaja.dTurtle;
+        }
+        else
+        {
+            Debug.Log("Using test turtle data");
+        }
+
         root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
         var itemList = root.Q<ListView>("ItemList");
         itemList.SetBinding("itemsSource", new DataBinding() { dataSourcePath = new PropertyPath("items") });
@@ -28,6 +41,8 @@ public class Shop : MonoBehaviour
                 dShop.inventory.ClearSlot(slot.tabIndex);
             };
         }
+
+
 
         // TODO: some depth-specific shop population (2 to 5 items?)
         for (int i = 0; i < 5; i++)
