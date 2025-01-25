@@ -3,6 +3,11 @@ using UnityEngine;
 public class RandomZoomsScript : MonoBehaviour
 {
     Vector3 zoomdir;
+    public float strength;
+
+    void Start(){
+        if (strength == 0) strength = 10;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -15,6 +20,6 @@ public class RandomZoomsScript : MonoBehaviour
             }
         }
 
-        GetComponent<Rigidbody2D>().AddForce(zoomdir*10);
+        GetComponent<Rigidbody2D>().AddForce(zoomdir*strength);
     }
 }

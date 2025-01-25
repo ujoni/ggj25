@@ -83,13 +83,13 @@ public class sukeltajascript : MonoBehaviour
         if (Random.Range(0, 120) == 0){
             //mittari.Lose(0.2f);
 
-            MouthBubb(1);
+            MouthBubb(2);
         }
 
         if (Random.Range(0, 800) == 0){
             //mittari.Lose(0.4f);
 
-            ArseBubb(2);
+            ArseBubb(4);
         }
         AnimationStuff();
         
@@ -140,24 +140,27 @@ public class sukeltajascript : MonoBehaviour
         }else{
             animpos += 0.075f;
         }
-        if (animpos > 6) animpos -= 6;
+        //if (animpos > 6) animpos -= 6;
+        float animposo = Mathf.Repeat(animpos, 6);
         
         if (movedir != V2.zero){
-            if (animpos < 1) GetComponent<SpriteRenderer>().sprite = images[0];
-            else if (animpos < 2) GetComponent<SpriteRenderer>().sprite = images[1];
-            else if (animpos < 3) GetComponent<SpriteRenderer>().sprite = images[2];
-            else if (animpos < 4) GetComponent<SpriteRenderer>().sprite = images[3];
-            else if (animpos < 5) GetComponent<SpriteRenderer>().sprite = images[2];
+            if (animposo < 1) GetComponent<SpriteRenderer>().sprite = images[0];
+            else if (animposo < 2) GetComponent<SpriteRenderer>().sprite = images[1];
+            else if (animposo < 3) GetComponent<SpriteRenderer>().sprite = images[2];
+            else if (animposo < 4) GetComponent<SpriteRenderer>().sprite = images[3];
+            else if (animposo < 5) GetComponent<SpriteRenderer>().sprite = images[2];
             else GetComponent<SpriteRenderer>().sprite = images[1];
         }
         else{
-            if (animpos < 1) GetComponent<SpriteRenderer>().sprite = images[1];
-            else if (animpos < 2) GetComponent<SpriteRenderer>().sprite = images[4];
-            else if (animpos < 3) GetComponent<SpriteRenderer>().sprite = images[5];
-            else if (animpos < 4) GetComponent<SpriteRenderer>().sprite = images[2];
-            else if (animpos < 5) GetComponent<SpriteRenderer>().sprite = images[5];
+            if (animposo < 1) GetComponent<SpriteRenderer>().sprite = images[1];
+            else if (animposo < 2) GetComponent<SpriteRenderer>().sprite = images[4];
+            else if (animposo < 3) GetComponent<SpriteRenderer>().sprite = images[5];
+            else if (animposo < 4) GetComponent<SpriteRenderer>().sprite = images[2];
+            else if (animposo < 5) GetComponent<SpriteRenderer>().sprite = images[5];
             else GetComponent<SpriteRenderer>().sprite = images[4];
         }
+        transform.GetChild(1).localRotation = UnityEngine.Quaternion.Euler(0, 0,
+            Mathf.Sin(animpos*1.5f)*7-25);
     }
 
     public void EatBubble(){
@@ -197,8 +200,17 @@ public class sukeltajascript : MonoBehaviour
             case CollectableType.NormalShell:
                 tData.shells += 1;
                 break;
+            case CollectableType.BigShell:
+                tData.shells += 4;
+                break;
+            case CollectableType.RainbowShell:
+                tData.shells += 15;
+                break;
             case CollectableType.SmallBubble:
                 tData.oxygen = Mathf.Min(tData.maxOxygen, tData.oxygen + 3);
+                break;
+            case CollectableType.BigBubble:
+                tData.oxygen = Mathf.Min(tData.maxOxygen, tData.oxygen + 10);
                 break;
         }
     }

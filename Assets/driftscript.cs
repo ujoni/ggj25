@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class driftscript : MonoBehaviour
 {
+
+    public float strength;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (strength == 0) strength = 1;
     }
 
     // Update is called once per frame
@@ -14,7 +17,7 @@ public class driftscript : MonoBehaviour
         float xx = PerlinNoise3D(transform.position.x, transform.position.y, Time.time/10) - 0.5f;
         float yy = PerlinNoise3D(transform.position.y, transform.position.x+1000.23f, Time.time/10) - 0.5f;
         //print (new Vector2(xx, yy));
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(xx, yy));
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(xx, yy) * strength);
     }
 
     public static float PerlinNoise3D(float x, float y, float z)

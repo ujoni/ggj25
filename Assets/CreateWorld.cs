@@ -27,6 +27,7 @@ public class CreateWorld : MonoBehaviour
     public float[] depthmins;
     public float[] depthmaxes;
     public int[] goodieamounts;
+    public int[] bunches;
 
     /*public GameObject[] enemies;
     public float[] enemydepthmins;
@@ -93,10 +94,11 @@ public class CreateWorld : MonoBehaviour
         }*/
 
         for (int g = 0; g < goodies.Length; g++){
-            for (int i = 0; i < goodieamounts[g]; i++) {
+          for (int i = 0; i < goodieamounts[g]; i++) {
                 MakeGoodie(g);
             }
         }
+
         //grid[startx+1, starty-1] = 0;
         for (int i = 0; i < 10; i++){
             CreateRandomBlob();
@@ -121,9 +123,12 @@ public class CreateWorld : MonoBehaviour
         V2 hole = holes[Random.Range(0, holes.Count)];
         while (SIZEY - hole.y < depthmins[g] || SIZEY - hole.y > depthmaxes[g])
             hole = holes[Random.Range(0, holes.Count)];
-        GameObject good = GameObject.Instantiate(goodies[g]);
-        good.transform.position = CornerPoint(hole.x + Random.Range(-0.5f,0.5f),
+        int amt = Random.Range(1, bunches[g]+1);
+        for( int t = 0; t < amt; t++){
+            GameObject good = GameObject.Instantiate(goodies[g]);
+            good.transform.position = CornerPoint(hole.x + Random.Range(-0.5f,0.5f),
             hole.y + Random.Range(-0.5f,0.5f));
+        }
     }
 
     /*void MakeEnemy(int g){
@@ -154,10 +159,10 @@ public class CreateWorld : MonoBehaviour
             //print(v);
             p.transform.position = CornerPoint(v.x, v.y);
             if (n.x > hole.x) {
-                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 45);
+                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 70);
             }
             else if (n.x < hole.x) {
-                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -45);
+                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -70);
             }
         
     }
