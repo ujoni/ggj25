@@ -27,6 +27,10 @@ public class Shop : MonoBehaviour
             Debug.Log("Using test turtle data");
         }
 
+        // set shop initial values
+        dShop.shells = turtleDataRef.shells;
+        dShop.inventory = turtleDataRef.inventory.GetCopy();
+
         root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
         var itemList = root.Q<ListView>("ItemList");
         itemList.SetBinding("itemsSource", new DataBinding() { dataSourcePath = new PropertyPath("items") });
@@ -57,7 +61,13 @@ public class Shop : MonoBehaviour
             var buy = item.Q<Button>();
             buy.clicked += () =>
             {
-                if (dShop.inventory.AddUpgrade(u)) itemList.hierarchy.Remove(item);
+                if (dShop.shells < u.price) return; // TODO: signal user that they poor
+                // perform purchase
+                if (dShop.inventory.AddUpgrade(u))
+                {
+                    dShop.shells -= u.price;
+                    itemList.hierarchy.Remove(item);
+                }
             };
             itemList.hierarchy.Add(item);
             item.dataSource = u;
