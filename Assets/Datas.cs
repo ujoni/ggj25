@@ -147,12 +147,24 @@ public class TurtleInventory
 [Serializable]
 public class TurtleData
 {
-    public float speed = 0;
     public int shells = 0;
     public float depth = 0;
-    public float oxygen = 100f;
-    public float maxOxygen = 100f;
-    public float carryingCapacity = 100f;
+    public float oxygen = 20;
+    [SerializeField]
+    public int maxOxygen
+    {
+        get { return 20 + inventory.GetTotalLevels(UpgradeType.OxygenMaximum) * 10; }
+    }
+    [SerializeField]
+    public int carryingCapacity
+    {
+        get { return 20 + inventory.GetTotalLevels(UpgradeType.CarryingCapacity) * 10; }
+    }
+    [SerializeField]
+    public int maxSpeed
+    {
+        get { return 20 + inventory.GetTotalLevels(UpgradeType.Speed) * 10; }
+    }
     public TurtleInventory inventory = new();
 }
 
@@ -186,11 +198,11 @@ public class UIConverters
     [UnityEditor.InitializeOnLoadMethod]
     public static void InitConverters()
     {
-        ConverterGroup g = new("shop");
+        ConverterGroup shopGroup = new("shop");
 
-        g.AddConverter((ref int level) => TurtleUpgrade.LevelToString(level));
-        g.AddConverter((ref UpgradeType type) => TurtleUpgrade.TypeToString(type));
+        shopGroup.AddConverter((ref int level) => TurtleUpgrade.LevelToString(level));
+        shopGroup.AddConverter((ref UpgradeType type) => TurtleUpgrade.TypeToString(type));
 
-        ConverterGroups.RegisterConverterGroup(g);
+        ConverterGroups.RegisterConverterGroup(shopGroup);
     }
 }

@@ -1,17 +1,35 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/MainStyle.uss?fileID=7433441132597879392&amp;guid=21380fbcaf712ed40ac7e62eca0515ff&amp;type=3#MainStyle" />
     <engine:VisualElement name="Main" style="flex-grow: 1; left: 0; right: 100%; top: 0; bottom: 100%;">
-        <engine:VisualElement name="TurtleBar" data-source-type="TurtleData, Assembly-CSharp" view-data-key="TurtleBar" style="flex-grow: 1; height: 48px; bottom: auto; min-height: 40px; max-height: 80px; flex-direction: row;">
-            <engine:Label text="0" name="Shells" style="-unity-text-align: middle-center; font-size: 30px; width: 46px; height: 100%;">
-                <Bindings>
-                    <engine:DataBinding property="text" data-source-path="shells" binding-mode="ToTarget" />
-                </Bindings>
-            </engine:Label>
-            <engine:ProgressBar value="22" title="Oxygen" name="Oxygen" style="display: flex; width: 205px; min-height: auto; height: 100%; font-size: 20px; align-self: flex-start; justify-content: space-around; align-items: stretch;">
+        <engine:VisualElement name="TurtleBar" data-source-type="TurtleData, Assembly-CSharp" view-data-key="TurtleBar" style="flex-grow: 1; height: 48px; bottom: auto; min-height: 40px; max-height: 80px; flex-direction: row; align-content: auto; justify-content: center;">
+            <engine:ProgressBar value="10" title="Oxygen" name="Oxygen" high-value="20" style="display: flex; width: 205px; min-height: auto; height: auto; font-size: 18px; align-self: auto; justify-content: center; align-items: stretch; margin-right: 20px; -unity-font-style: bold; -unity-background-image-tint-color: rgb(131, 237, 255); background-color: rgba(149, 53, 148, 0); flex-shrink: 1; align-content: auto; flex-grow: 0; -unity-text-outline-width: 0; -unity-background-scale-mode: stretch-to-fill; background-position-x: center 0; background-position-y: center 0; scale: 1 1;">
                 <Bindings>
                     <engine:DataBinding property="highValue" data-source-path="maxOxygen" binding-mode="ToTarget" />
                     <engine:DataBinding property="value" data-source-path="oxygen" binding-mode="ToTarget" />
                 </Bindings>
             </engine:ProgressBar>
+            <engine:VisualElement name="ShellContainer" style="flex-grow: 0; flex-direction: row; width: 250px; flex-shrink: 0;">
+                <engine:Label text="Shells:" name="Label" style="-unity-text-align: middle-right; font-size: 30px; width: auto; height: 100%;" />
+                <engine:Label text="0" name="Shells" style="-unity-text-align: middle-right; font-size: 30px; width: 46px; height: 100%;">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="shells" binding-mode="ToTarget" />
+                    </Bindings>
+                </engine:Label>
+                <engine:Label text="/" name="Slash" style="-unity-text-align: middle-center; font-size: 30px; width: 12px; height: 100%;" />
+                <engine:Label text="0" name="ShellsMax" style="-unity-text-align: middle-left; font-size: 30px; width: 46px; height: 100%; flex-basis: auto;">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="carryingCapacity" binding-mode="ToTarget" />
+                    </Bindings>
+                </engine:Label>
+            </engine:VisualElement>
+            <engine:VisualElement name="DepthContainer" style="flex-grow: 0; flex-direction: row; width: 200px; flex-shrink: 0;">
+                <engine:Label text="Depth:" name="Label" style="-unity-text-align: middle-right; font-size: 30px; width: auto; height: 100%;" />
+                <engine:Label text="0" name="ShellsMax" style="-unity-text-align: middle-left; font-size: 30px; width: 46px; height: 100%; flex-basis: auto;">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="depth" binding-mode="ToTarget" />
+                    </Bindings>
+                </engine:Label>
+            </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

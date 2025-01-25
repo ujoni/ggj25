@@ -1,7 +1,4 @@
-using System.Net.Security;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 using V3 = UnityEngine.Vector3;
 
 public class follow : MonoBehaviour

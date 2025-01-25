@@ -1307,6 +1307,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodycollect: 0
   bubb: {fileID: 5740042439521266560, guid: a90c131c9801dcc48bb6f5ca817165dd, type: 3}
+  dTurtle:
+    speed: 0
+    shells: 0
+    depth: 0
+    oxygen: 100
+    maxOxygen: 100
+    carryingCapacity: 100
+    inventory:
+      upgrades:
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
   images:
   - {fileID: 21300000, guid: f941c59ca36aefc47a555e3925187971, type: 3}
   - {fileID: 21300000, guid: 138ee17b1822e724e955a93d04856e59, type: 3}

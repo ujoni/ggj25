@@ -1,7 +1,4 @@
-using System.Numerics;
-//using Unity.VisualScripting;
 using UnityEngine;
-using System.Linq;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using UnityEngine.UIElements;
@@ -17,7 +14,6 @@ public class sukeltajascript : MonoBehaviour
     public bool bodycollect;
     float lastflip;
 
-    KuplaMittariScript mittari;
     public GameObject bubb;
 
     public TurtleData dTurtle = new TurtleData();
@@ -29,7 +25,7 @@ public class sukeltajascript : MonoBehaviour
         animpos = 0;
 
         var ui = FindFirstObjectByType<UIDocument>();
-        var turtleBar = ui.rootVisualElement.Children().First().Children().Single(element => element.viewDataKey == "TurtleBar");
+        var turtleBar = ui.rootVisualElement.Q<VisualElement>("TurtleBar");
         turtleBar.dataSource = dTurtle;
 
         //mittari = GameObject.Find("Mittari").GetComponent<KuplaMittariScript>();
@@ -145,7 +141,7 @@ public class sukeltajascript : MonoBehaviour
     {
         MouthBubb(damage);
         if (damage > 0)
-            GetComponent<Rigidbody2D>().AddForce(impulse*1000);
+            GetComponent<Rigidbody2D>().AddForce(impulse * 1000);
     }
 
     void AnimationStuff()

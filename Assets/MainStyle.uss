@@ -1,0 +1,11 @@
+.unity-progress-bar__title {
+    color: #FFF;
+}
+
+.unity-progress-bar__progress {
+    background-color: #4AF;
+}
+
+.unity-progress-bar__background {
+    background-color: #003;
+}
