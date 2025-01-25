@@ -3,6 +3,7 @@ using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.Linq;
 public class sukeltajascript : MonoBehaviour
 {
 
@@ -22,13 +23,21 @@ public class sukeltajascript : MonoBehaviour
 
     public float startY;
 
+    UIDocument statusUI;
+    UIDocument shopUI;
+    bool uiFlip = false;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         animpos = 0;
 
-        var ui = FindFirstObjectByType<UIDocument>();
-        var turtleBar = ui.rootVisualElement.Q<VisualElement>("TurtleBar");
+        var UIs = FindObjectsByType<UIDocument>(FindObjectsSortMode.None);
+        statusUI = UIs.First(ui => ui.name == "StatusUI");
+        shopUI = UIs.First(ui => ui.name == "ShopUI");
+        SetUIs();
+        var turtleBar = statusUI.rootVisualElement.Q<VisualElement>("TurtleBar");
         turtleBar.dataSource = dTurtle;
 
         //mittari = GameObject.Find("Mittari").GetComponent<KuplaMittariScript>();
@@ -36,6 +45,12 @@ public class sukeltajascript : MonoBehaviour
         sivusuunta = 1;
 
         startY = transform.position.y + 16;
+    }
+
+    void SetUIs()
+    {
+        statusUI.gameObject.SetActive(!uiFlip);
+        shopUI.gameObject.SetActive(uiFlip);
     }
 
     void Bubb()
@@ -194,8 +209,8 @@ public class sukeltajascript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // forces shop open
-            SceneManager.LoadSceneAsync("Shop", LoadSceneMode.Additive);
+            uiFlip = !uiFlip;
+            SetUIs();
             return;
         }
 
