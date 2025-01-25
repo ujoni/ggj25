@@ -1,5 +1,3 @@
-using System.Linq;
-using NUnit.Framework;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,8 +5,10 @@ using UnityEngine.UIElements;
 public class Shop : MonoBehaviour
 {
     public VisualTreeAsset listItem;
+    // override value when testing the scene to get different depths
+    // real runs yoink the value from the sukeltajascript
+    public float currentDepth;
     public ShopData dShop = new();
-    public TurtleData turtleDataRef = new();
     private VisualElement root;
     private VisualElement[] inventorySlots = new VisualElement[13];
 
@@ -20,17 +20,17 @@ public class Shop : MonoBehaviour
         if (sukeltaja != null)
         {
             Debug.Log("Using real turtle data");
-            turtleDataRef = sukeltaja.dTurtle;
+            // set shop initial values
+            dShop.shells = sukeltaja.dTurtle.shells;
+            dShop.inventory = sukeltaja.dTurtle.inventory.GetCopy();
+            currentDepth = sukeltaja.dTurtle.depth; // used for item gen
         }
         else
         {
             Debug.Log("Using test turtle data");
+
         }
 
-        // set shop initial values
-        dShop.shells = turtleDataRef.shells;
-        dShop.inventory = turtleDataRef.inventory.GetCopy();
-        var currentDepth = turtleDataRef.depth; // used for item gen
 
         root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
         var itemList = root.Q<ListView>("ItemList");
@@ -61,7 +61,7 @@ public class Shop : MonoBehaviour
             var buy = item.Q<Button>();
             buy.clicked += () =>
             {
-                Debug.Log("Purchasing " + u.type);
+                Debug.Log("Purchasing " + u.type + ", shells " + dShop.shells + ", price " + u.price);
                 if (dShop.shells < u.price) return; // TODO: signal user that they poor
                 Debug.Log("Got money");
                 // perform purchase
