@@ -2,6 +2,7 @@ using UnityEngine;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 public class sukeltajascript : MonoBehaviour
 {
 
@@ -19,6 +20,8 @@ public class sukeltajascript : MonoBehaviour
     public TurtleData dTurtle = new TurtleData();
     public Sprite[] images;
 
+    public float startY;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -31,6 +34,8 @@ public class sukeltajascript : MonoBehaviour
         //mittari = GameObject.Find("Mittari").GetComponent<KuplaMittariScript>();
         speed = 0.2f;
         sivusuunta = 1;
+
+        startY = transform.position.y + 16;
     }
 
     void Bubb()
@@ -133,8 +138,7 @@ public class sukeltajascript : MonoBehaviour
             UnityEngine.Quaternion.Euler(0, 0, Mathf.Lerp(r, end, 0.2f));
 
 
-
-
+        dTurtle.depth = Mathf.Floor(startY - transform.position.y);
     }
 
     public void Hurt(float damage, V3 impulse)
@@ -187,6 +191,14 @@ public class sukeltajascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // forces shop open
+            SceneManager.LoadSceneAsync("Shop", LoadSceneMode.Additive);
+            return;
+        }
+
         movedir = V2.zero;
         if (Input.GetKey(KeyCode.UpArrow))
         {
