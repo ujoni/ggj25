@@ -17,13 +17,18 @@ public class Collectable : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D(Collider2D collider)
+    void OnCollisionEnter2D(Collision2D collider)
     {
-        if (!collected && collider.TryGetComponent<Turtle>(out var turtle))
+        //print("kekk" + collider.GetContact(0).collider.gameObject.name);
+        if (!collected && (collider.GetContact(0).collider.gameObject.name == "turtlehead" ||
+            collider.gameObject.name == "Sukeltaja" &&
+            collider.gameObject.GetComponent<sukeltajascript>().bodycollect))//TryGetComponent<sukeltajascript>(out var turtle))
         {
             collected = true;
-            GetComponent<SpriteRenderer>().color = Color.red;
-            turtle.Collect(cData);
+            // GetComponent<SpriteRenderer>().color = Color.red;
+            collider.gameObject.GetComponent<sukeltajascript>().Collect(cData);
+            Destroy(gameObject);
+            
         }
     }
 }

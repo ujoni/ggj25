@@ -21,10 +21,21 @@ public class CreateWorld : MonoBehaviour
 
     public Material maamat;
     public GameObject sukeltaja;
-    public GameObject plant;
+    public GameObject[] plants;
+
+    public GameObject[] goodies;
+    public float[] depthmins;
+    public float[] depthmaxes;
+    public int[] goodieamounts;
+
+    /*public GameObject[] enemies;
+    public float[] enemydepthmins;
+    public float[] enemydepthmaxes;*/
 
     List<V2> safes;
     List<V2> safenbrs;
+
+
 
     int[,] grid;
     int startx = 75;
@@ -38,7 +49,7 @@ public class CreateWorld : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Random.InitState(666);
+        Random.InitState(660);
 
         safes = new List<V2>();
         safenbrs = new List<V2>();
@@ -52,7 +63,14 @@ public class CreateWorld : MonoBehaviour
         }
         sukeltaja.transform.position = CornerPoint(startx, starty);
         grid[startx, starty] = 0;
-        holes.Add(new V2(startx, starty));
+        grid[startx, starty-1] = 0;
+        grid[startx-1, starty-1] = 0;
+        grid[startx+1, starty-1] = 0;
+        grid[startx, starty-2] = 0;
+        grid[startx-1, starty-2] = 0;
+        grid[startx+1, starty-2] = 0;
+
+        // holes.Add(new V2(startx, starty)); // NOPE
         //SetGrid(grid, startx, starty, 0);
 
         int mains = 2; //Random.Range(1, 3);
@@ -74,6 +92,11 @@ public class CreateWorld : MonoBehaviour
             
         }*/
 
+        for (int g = 0; g < goodies.Length; g++){
+            for (int i = 0; i < goodieamounts[g]; i++) {
+                MakeGoodie(g);
+            }
+        }
         //grid[startx+1, starty-1] = 0;
         for (int i = 0; i < 10; i++){
             CreateRandomBlob();
@@ -81,39 +104,88 @@ public class CreateWorld : MonoBehaviour
 
         CreateTerrain();
 
-        MakeSafe();
+        for (int i = 0; i < 50; i++){
+            MakePlant();
+        }
+
+        /*for (int g = 0; g < enemies.Length; g++){
+            for (int i = 0; i < 50; i++){
+                MakeEnemy(g);
+            }
+        }*/
 
     }
 
-    void MakeSafe(){
-        for (int i = 0; i < 50; i++){
+    void MakeGoodie(int g){
+
+        V2 hole = holes[Random.Range(0, holes.Count)];
+        while (SIZEY - hole.y < depthmins[g] || SIZEY - hole.y > depthmaxes[g])
+            hole = holes[Random.Range(0, holes.Count)];
+        GameObject good = GameObject.Instantiate(goodies[g]);
+        good.transform.position = CornerPoint(hole.x + Random.Range(-0.5f,0.5f),
+            hole.y + Random.Range(-0.5f,0.5f));
+    }
+
+    /*void MakeEnemy(int g){
+
+        V2 hole = holes[Random.Range(0, holes.Count)];
+        while (SIZEY - hole.y < enemydepthmins[g] || SIZEY - hole.y > enemydepthmaxes[g])
+            hole = holes[Random.Range(0, holes.Count)];
+        GameObject good = GameObject.Instantiate(enemies[g]);
+        good.transform.position = CornerPoint(hole.x + Random.Range(-0.5f,0.5f),
+            hole.y + Random.Range(-0.5f,0.5f));
+    }*/
+
+    void MakePlant(){
             V2 hole = holes[Random.Range(0, holes.Count)];
             V2 n = nbrof(hole, hole + V2.up);
-            while (hole.y < KUPLAMIN || GetGrid(grid, n.x, n.y) != 1){
+            float kuplamin = SIZEY * Random.Range(0f, 1f);
+            while (hole.y < kuplamin || GetGrid(grid, n.x, n.y) != 1){
                 hole = holes[Random.Range(0, holes.Count)];
                 n = nbrof(hole, hole+ V2.up);
+                kuplamin = SIZEY * Random.Range(0f, 1f);
             }
-            print(GetGrid(grid, hole.x, hole.y) == 0);
+            // print(GetGrid(grid, hole.x, hole.y) == 0);
             safes.Add(hole);
             safenbrs.Add(n);
 
-            GameObject p = GameObject.Instantiate(plant);
+            GameObject p = GameObject.Instantiate(plants[Random.Range(0, plants.Length)]);
             V2 v = (hole + n)/2;
             //print(v);
             p.transform.position = CornerPoint(v.x, v.y);
-        }
+            if (n.x > hole.x) {
+                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 45);
+            }
+            else if (n.x < hole.x) {
+                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -45);
+            }
+        
     }
 
     // from int point to actual world point
     V3 CornerPoint(float x, float y){
         float c = Mathf.Min(1, (SIZEY - y)/10);
-        float d = 1;
+        float d = 0.9f;
 
         return new V3(x*10 + Mathf.PerlinNoise(y*4, x*4+120)*2*d +
-            (Mathf.PerlinNoise(y/10, x/10+150)*7f + Mathf.PerlinNoise(y/50, x/50+120)*20f)*c,
+            (Mathf.PerlinNoise(y/8, x/8+150)*7f + Mathf.PerlinNoise(y/20, x/20+120)*20f)*c,
             
-            y*10 + Mathf.PerlinNoise(x*4, y*4)*2*d + (Mathf.PerlinNoise(y/10, x/10)*7f +
-            + Mathf.PerlinNoise(y/50, x/50+16)*20)*c,
+            y*10 + Mathf.PerlinNoise(x*4, y*4)*2*d +
+            (Mathf.PerlinNoise(y/8, x/8)*7f + Mathf.PerlinNoise(y/20, x/20+16)*20)*c,
+            
+            0);
+    }
+
+    // slightly diff
+    V3 CornerPointUV(float x, float y){
+        float c = Mathf.Min(1, (SIZEY - y)/10)*1.1f;
+        float d = 0.9f;
+
+        return new V3(x*10 + Mathf.PerlinNoise(y*4, x*4+120)*2*d +
+            (Mathf.PerlinNoise(y/6, x/6+150)*7.5f + Mathf.PerlinNoise(y/16, x/16+120)*27f)*c,
+            
+            y*10 + Mathf.PerlinNoise(x*4, y*4)*2*d +
+            (Mathf.PerlinNoise(y/6, x/6)*7.5f + Mathf.PerlinNoise(y/16+1, x/16+16)*27)*c,
             
             0);
     }
@@ -184,7 +256,7 @@ public class CreateWorld : MonoBehaviour
 
     void CreateRandomBlob(){
         var curr = holes[Random.Range(0, holes.Count)];
-        float rad = Random.Range(2f, 6f);
+        float rad = Random.Range(2f, 5f);
         for (int ix = -10; ix <= 10; ix++){
             for (int iy = -10; iy <= 10; iy++){
                 if (new V2(ix, iy).magnitude+Mathf.PerlinNoise(ix, iy)*0.3f < rad) {
@@ -229,7 +301,7 @@ public class CreateWorld : MonoBehaviour
                     List<V2> uvs = new List<V2>();
                     List<V3> norms = new List<V3>();
                     pts.Add(CornerPoint(ix, iy));
-                    uvs.Add(CornerPoint(ix, iy)*uvscale);
+                    uvs.Add(CornerPointUV(ix, iy)*uvscale);
                     norms.Add(V3.back);
                     List<V2> corners = new List<V2>{
                         new V2(ix-0.5f, iy-0.5f), 
@@ -244,6 +316,8 @@ public class CreateWorld : MonoBehaviour
                     for (int i = 0; i < 4; i++){
                         V2 c = corners[i];
                         V2 c2 = corners[(i+1)%4];
+                        bool cinning = false;
+                        bool c2inning = false;
                         
                         V2 checkprev = sidechecks[(i+3)%4];
                         V2 checkcurr = sidechecks[i];
@@ -257,16 +331,18 @@ public class CreateWorld : MonoBehaviour
                         // if c2 side nbrs empty, move inward
                         // TODO THIS WILL CHANGE
                         if (checkocurr && checkonext) {
-                            c2 = V2.Lerp(c2, new V2(ix, iy), 0.2f);
+                            //c2 = V2.Lerp(c2, new V2(ix, iy), 0.2f);
+                            c2inning = true;
                         }
                         if (checkocurr && checkoprev) {
-                            c = V2.Lerp(c, new V2(ix, iy), 0.2f);
+                            //c = V2.Lerp(c, new V2(ix, iy), 0.2f);
+                            cinning = true;
                         }
 
                         // if this side has stuff, just make a straight, i.e. only add corner point
                         if (!checkocurr){
                             pts.Add(CornerPoint(c.x, c.y));
-                            uvs.Add((V2)CornerPoint(c.x, c.y)*uvscale);
+                            uvs.Add((V2)CornerPointUV(c.x, c.y)*uvscale);
                             norms.Add(V3.back);
 
                         }
@@ -274,10 +350,19 @@ public class CreateWorld : MonoBehaviour
                         else {
 
                             // physical corner points
-                            for (int j = 0; j < 20; j++){
-                                V2 p = V2.Lerp(c, c2, j/20f);
+                            for (int j = 0; j < 25; j++){
+                                float inamt = 0;
+                                if (cinning && j < 5) {
+                                    inamt = 5 - j;
+                                    //inamt = 3;
+                                }
+                                if (c2inning && j >= 21) {
+                                    inamt = j - 20;
+                                }
+                                V2 p = V2.Lerp(c, c2, j/25f);
+                                p = V2.MoveTowards(p, new V2(ix, iy), Mathf.Pow(inamt,1.09f)*0.02f);
                                 pts.Add(CornerPoint(p.x, p.y));
-                                uvs.Add(CornerPoint(p.x, p.y)*uvscale);
+                                uvs.Add(CornerPointUV(p.x, p.y)*uvscale);
                                 norms.Add(V3.back);
                             }
                         }
