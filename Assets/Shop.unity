@@ -275,6 +275,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1971f3ebd941a704e88c039cf601140f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listItem: {fileID: 9197481963319205126, guid: fb42c34b2d9bea449ac3801b7a27a76f, type: 3}
+  dShop:
+    items: []
+    inventory:
+      inventory:
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
+      - level: 0
+        type: 0
+        icon: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

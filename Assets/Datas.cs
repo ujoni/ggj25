@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Rendering.Universal;
-using UnityEditor.UIElements;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
-
-
 
 public enum UpgradeType
 {
@@ -27,15 +26,24 @@ public class TurtleUpgrade
         { UpgradeType.Toughness, 6 },
     };
 
+    private static readonly Dictionary<UpgradeType, Sprite> texturePerType = new();
+
     public int level = 0;
     public UpgradeType type = UpgradeType.None;
-    public Sprite icon;
+
+    [SerializeField]
+    public Sprite icon
+    {
+        get
+        {
+            return texturePerType[type];
+        }
+    }
 
     [SerializeField]
     public float price
     {
         get { return level * pricePerType[type]; }
-        set { /* I do not actually care */ }
     }
 
     public static string LevelToString(int level)
@@ -43,9 +51,8 @@ public class TurtleUpgrade
         return "lvl " + level.ToString();
     }
 
-    internal static string TypeToString(UpgradeType type)
+    public static string TypeToString(UpgradeType type)
     {
-        Debug.Log("Converting type");
         switch (type)
         {
             case UpgradeType.None: return "BUG!!";
@@ -56,13 +63,44 @@ public class TurtleUpgrade
         }
         return "PANIC!!";
     }
+
+    [UnityEngine.RuntimeInitializeOnLoadMethod]
+    public static void LoadIcons()
+    {
+        Debug.Log("Loading icons like a baus");
+        var asset = Resources.Load<Sprite>("ball");
+        Debug.Log("Loaded asset " + asset);
+        texturePerType.Add(UpgradeType.CarryingCapacity, asset);
+        texturePerType.Add(UpgradeType.OxygenMaximum, asset);
+        texturePerType.Add(UpgradeType.Speed, asset);
+        texturePerType.Add(UpgradeType.Toughness, asset);
+    }
 }
 
 
 [Serializable]
 public class TurtleInventory
 {
-    public TurtleUpgrade[] inventory = new TurtleUpgrade[13];
+    public TurtleUpgrade[] upgrades = new TurtleUpgrade[13];
+
+    public bool AddUpgrade(TurtleUpgrade u)
+    {
+        var slot = NextSlot();
+        if (slot == -1)
+        {
+            Debug.Log("AddUpgrade: did not have space");
+            return false;
+        }
+        Debug.Log("AddUpgrade: slot is " + slot);
+        upgrades[slot] = u;
+        return true;
+    }
+
+
+    private int NextSlot()
+    {
+        return upgrades.ToList().FindIndex(u => u.type == UpgradeType.None);
+    }
 }
 
 [Serializable]
