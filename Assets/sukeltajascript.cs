@@ -62,6 +62,7 @@ public class sukeltajascript : MonoBehaviour
     void MouthBubb(float oxy){
         tData.oxygen -= oxy;
 
+        if (oxy <= 0) return;
         int amt = Random.Range((int)(2*oxy), (int)(5*oxy));
         if (amt > 30) amt = 30;
         for (int i = 0; i < amt; i++){
@@ -83,13 +84,13 @@ public class sukeltajascript : MonoBehaviour
         if (Random.Range(0, 120) == 0){
             //mittari.Lose(0.2f);
 
-            MouthBubb(2);
+            MouthBubb(0.5f);
         }
 
         if (Random.Range(0, 800) == 0){
             //mittari.Lose(0.4f);
 
-            ArseBubb(4);
+            ArseBubb(1f);
         }
         AnimationStuff();
         
@@ -131,7 +132,8 @@ public class sukeltajascript : MonoBehaviour
 
     public void Hurt(float damage, V3 impulse){
         MouthBubb(damage);
-        GetComponent<Rigidbody2D>().AddForce(impulse*1000);
+        if (damage > 0)
+            GetComponent<Rigidbody2D>().AddForce(impulse*1000);
     }
 
     void AnimationStuff(){

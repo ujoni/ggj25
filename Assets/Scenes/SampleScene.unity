@@ -1425,6 +1425,7 @@ GameObject:
   - component: {fileID: 1015972119}
   - component: {fileID: 1015972118}
   - component: {fileID: 1015972117}
+  - component: {fileID: 1015972121}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -1546,6 +1547,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1015972121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015972116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26acc6068833a54c9cd44df51ee2ed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1121648620 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4544621695844748893, guid: 887cac73808c75243bd9ea8859f1e675, type: 3}
@@ -1966,8 +1979,8 @@ MonoBehaviour:
   - 1000000
   - 1000000
   - 1000000
-  - 1000000
-  goodieamounts: 90010000c80000001e000000280000002800000014000000
+  - 14
+  goodieamounts: 90010000c80000001e000000280000002800000008000000
   bunches: 010000000100000001000000010000000100000004000000
 --- !u!1 &1728372351
 GameObject:
