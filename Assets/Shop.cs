@@ -28,7 +28,8 @@ public class Shop : MonoBehaviour
                 dShop.inventory.ClearSlot(slot.tabIndex);
             };
         }
- 
+
+        // TODO: some depth-specific shop population (2 to 5 items?)
         for (int i = 0; i < 5; i++)
         {
             TurtleUpgrade u = new()
