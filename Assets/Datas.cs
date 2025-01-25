@@ -46,6 +46,12 @@ public class TurtleUpgrade
         get { return level * pricePerType[type]; }
     }
 
+    [SerializeField]
+    public StyleEnum<Visibility> visible
+    {
+        get { return type != UpgradeType.None ? new(Visibility.Visible) : new(Visibility.Hidden); }
+    }
+
     public static string LevelToString(int level)
     {
         return "lvl " + level.ToString();
@@ -69,11 +75,11 @@ public class TurtleUpgrade
     {
         Debug.Log("Loading icons like a baus");
         var asset = Resources.Load<Sprite>("ball");
-        Debug.Log("Loaded asset " + asset);
         texturePerType.Add(UpgradeType.CarryingCapacity, asset);
         texturePerType.Add(UpgradeType.OxygenMaximum, asset);
         texturePerType.Add(UpgradeType.Speed, asset);
         texturePerType.Add(UpgradeType.Toughness, asset);
+        texturePerType.Add(UpgradeType.None, null);
     }
 }
 
@@ -92,10 +98,18 @@ public class TurtleInventory
             return false;
         }
         Debug.Log("AddUpgrade: slot is " + slot);
-        upgrades[slot] = u;
+        // copy instead of set - allows our "pretty" UI to catch the value changes
+        var cur = upgrades[slot];
+        cur.type = u.type;
+        cur.level = u.level;
         return true;
     }
 
+    public void ClearSlot(int slot)
+    {
+        upgrades[slot].level = 0;
+        upgrades[slot].type = UpgradeType.None;
+    }
 
     private int NextSlot()
     {
