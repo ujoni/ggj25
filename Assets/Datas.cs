@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
+using Unity.Multiplayer.Center.Common;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -59,7 +60,7 @@ public class TurtleUpgrade
         type = UpgradeType.None;
     }
 
-    public void CopyTo(TurtleUpgrade another)
+    public void CopyTo(ref TurtleUpgrade another)
     {
         another.level = level;
         another.type = type;
@@ -100,7 +101,9 @@ public class TurtleUpgrade
 [Serializable]
 public class TurtleInventory
 {
-    public TurtleUpgrade[] upgrades = new TurtleUpgrade[13];
+    public TurtleUpgrade[] upgrades = new TurtleUpgrade[13]{
+        new(), new(), new(), new(), new(), new(), new(), new(), new(), new(), new(), new(), new(),
+    };
 
     public bool AddUpgrade(TurtleUpgrade u)
     {
@@ -123,10 +126,19 @@ public class TurtleInventory
         upgrades[slot].Reset();
     }
 
+    public int GetTotalLevels(UpgradeType forType)
+    {
+        return upgrades.Where(u => u.type == forType).Aggregate(0, (acc, u) => acc + u.level);
+    }
+
     public TurtleInventory GetCopy()
     {
         TurtleInventory n = new();
-        for (int i = 0; i < upgrades.Count(); i++) upgrades[i].CopyTo(n.upgrades[i]);
+        for (int i = 0; i < upgrades.Count(); i++)
+        {
+            if (upgrades[i] != null) upgrades[i].CopyTo(ref n.upgrades[i]);
+            else n.upgrades[i] = new();
+        }
         return n;
     }
 

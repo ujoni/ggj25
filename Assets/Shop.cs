@@ -30,6 +30,7 @@ public class Shop : MonoBehaviour
         // set shop initial values
         dShop.shells = turtleDataRef.shells;
         dShop.inventory = turtleDataRef.inventory.GetCopy();
+        var currentDepth = turtleDataRef.depth; // used for item gen
 
         root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
         var itemList = root.Q<ListView>("ItemList");
@@ -47,7 +48,6 @@ public class Shop : MonoBehaviour
         }
 
 
-
         // TODO: some depth-specific shop population (2 to 5 items?)
         for (int i = 0; i < 5; i++)
         {
@@ -61,10 +61,13 @@ public class Shop : MonoBehaviour
             var buy = item.Q<Button>();
             buy.clicked += () =>
             {
+                Debug.Log("Purchasing " + u.type);
                 if (dShop.shells < u.price) return; // TODO: signal user that they poor
+                Debug.Log("Got money");
                 // perform purchase
                 if (dShop.inventory.AddUpgrade(u))
                 {
+                    Debug.Log("Added upgrade");
                     dShop.shells -= u.price;
                     itemList.hierarchy.Remove(item);
                 }

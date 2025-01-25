@@ -5,21 +5,21 @@
                 <engine:DataBinding property="style.backgroundImage" data-source-path="icon" binding-mode="ToTarget" />
             </Bindings>
         </engine:VisualElement>
-        <engine:Label text="Name of the thing" name="Name" style="flex-shrink: 1; flex-grow: initial;">
+        <engine:Label text="Name of the thing" name="Name" style="flex-shrink: 1; flex-grow: initial; -unity-font-style: bold; font-size: 16px;">
             <Bindings>
                 <engine:DataBinding property="text" data-source-path="type" binding-mode="ToTarget" source-to-ui-converters="shop" />
             </Bindings>
         </engine:Label>
-        <engine:Label text="Level" name="Level">
+        <engine:Label text="Level" name="Level" style="font-size: 16px; -unity-font-style: bold;">
             <Bindings>
                 <engine:DataBinding property="text" data-source-path="level" binding-mode="ToTarget" source-to-ui-converters="shop" />
             </Bindings>
         </engine:Label>
-        <engine:Label text="Price" name="Price">
+        <engine:Label text="Price" name="Price" style="font-size: 16px; -unity-font-style: bold;">
             <Bindings>
                 <engine:DataBinding property="text" data-source-path="price" binding-mode="ToTarget" />
             </Bindings>
         </engine:Label>
-        <engine:Button text="Buy" name="Buy" />
+        <engine:Button text="Buy" name="Buy" style="background-color: rgb(21, 161, 21); font-size: 18px; -unity-font-style: bold; color: rgb(255, 227, 160);" />
     </engine:VisualElement>
 </engine:UXML>

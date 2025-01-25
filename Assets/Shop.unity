@@ -277,8 +277,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listItem: {fileID: 9197481963319205126, guid: fb42c34b2d9bea449ac3801b7a27a76f, type: 3}
   dShop:
-    shopDepth: 0
+    shells: 20
     items: []
+    inventory:
+      upgrades:
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+      - level: 0
+        type: 0
+  turtleDataRef:
+    speed: 0
+    shells: 5
+    depth: 0
+    oxygen: 100
+    maxOxygen: 100
+    carryingCapacity: 100
     inventory:
       upgrades:
       - level: 0
