@@ -1,3 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement data-source-type="ShopData, Assembly-CSharp" style="flex-grow: 1;" />
+    <engine:VisualElement data-source-type="ShopData, Assembly-CSharp" name="Root" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/fake-shop.png?fileID=2800000&amp;guid=faaa3e4f178ef2a4fa5ff8add6e85353&amp;type=3#fake-shop&quot;);">
+        <engine:VisualElement name="ShopDeck" style="flex-grow: 1; width: 60%; right: 0; left: 40%;">
+            <engine:ListView name="ItemList" data-source-path="items" item-template="project://database/Assets/ShopItem.uxml?fileID=9197481963319205126&amp;guid=fb42c34b2d9bea449ac3801b7a27a76f&amp;type=3#ShopItem" selection-type="None" />
+        </engine:VisualElement>
+    </engine:VisualElement>
 </engine:UXML>
