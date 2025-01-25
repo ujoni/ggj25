@@ -1,9 +1,6 @@
 using System;
 using System.Linq;
-using System.Runtime.Serialization;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.U2D.IK;
 using UnityEngine.UIElements;
 
 [Serializable]
