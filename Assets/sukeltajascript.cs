@@ -1,9 +1,10 @@
 using System.Numerics;
 //using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
-
+using UnityEngine.UIElements;
 public class sukeltajascript : MonoBehaviour
 {
 
@@ -12,48 +13,102 @@ public class sukeltajascript : MonoBehaviour
     int sivusuunta;
     float wantrot;
 
+    float animpos;
+    public bool bodycollect;
+    float lastflip;
+
     KuplaMittariScript mittari;
     public GameObject bubb;
+
+    private TurtleData tData = new TurtleData();
+    public Sprite[] images;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        mittari = GameObject.Find("Mittari").GetComponent<KuplaMittariScript>();
+        animpos = 0;
+
+        var ui = FindFirstObjectByType<UIDocument>();
+        var turtleBar = ui.rootVisualElement.Children().First().Children().Single(element => element.viewDataKey == "TurtleBar");
+        turtleBar.dataSource = tData;
+
+        //mittari = GameObject.Find("Mittari").GetComponent<KuplaMittariScript>();
         speed = 0.2f;   
         sivusuunta = 1;
     }
 
     void Bubb(){
         GameObject go = GameObject.Instantiate(bubb);
-        go.transform.position = transform.GetChild(0).position;
-        go.GetComponent<Rigidbody2D>().linearVelocity = V3.right * sivusuunta*2 + (V3)movedir*0.5f;
+        go.transform.position = transform.GetChild(0).position + V3.right*0.7f*sivusuunta;
+        go.GetComponent<Rigidbody2D>().linearVelocity = V3.right * sivusuunta*2 + (V3)movedir*0.5f + (V3)Random.insideUnitCircle*0.1f;
 
-        float r = Random.Range(0.3f, 0.7f);
+        float r = Random.Range(0.7f, 0.9f);
         go.transform.localScale = new V3(r*go.transform.localScale.x,
             r*go.transform.localScale.y, 1);
         Destroy(go, 10 + 20*Random.Range(0f, 1f));
     }
 
-    void FixedUpdate(){
-        if (Random.Range(0, 100) == 0){
-            mittari.Lose(0.2f);
-            int amt = Random.Range(3,10);
-            for (int i = 0; i < amt; i++){
-                Bubb();
-            }
+    void Fart(){
+        GameObject go = GameObject.Instantiate(bubb);
+        go.transform.position = transform.position - transform.right*1.65f*sivusuunta;
+        go.GetComponent<Rigidbody2D>().linearVelocity = V3.left * sivusuunta*2 - (V3)movedir*0.5f + (V3)Random.insideUnitCircle*0.1f;
+
+        float r = Random.Range(0.8f, 1.1f);
+        go.transform.localScale = new V3(r*go.transform.localScale.x,
+            r*go.transform.localScale.y, 1);
+        Destroy(go, 10 + 20*Random.Range(0f, 1f));
+    }
+
+    void MouthBubb(float oxy){
+        tData.oxygen -= oxy;
+
+        int amt = Random.Range((int)(2*oxy), (int)(5*oxy));
+        if (amt > 30) amt = 30;
+        for (int i = 0; i < amt; i++){
+            Bubb();
         }
+    }
+
+    void ArseBubb(float oxy){
+        tData.oxygen -= oxy;
+
+        int amt = Random.Range((int)(4*oxy), (int)(8*oxy));
+        if (amt > 30) amt = 30;
+        for (int i = 0; i < amt; i++){
+            Fart();
+        }
+    }
+
+    void FixedUpdate(){
+        if (Random.Range(0, 120) == 0){
+            //mittari.Lose(0.2f);
+
+            MouthBubb(2);
+        }
+
+        if (Random.Range(0, 800) == 0){
+            //mittari.Lose(0.4f);
+
+            ArseBubb(4);
+        }
+        AnimationStuff();
+        
 
         transform.position += (V3)movedir*speed;
         if (movedir.x > 0) {
             //GetComponent<SpriteRenderer>().flipX = false;
             transform.localScale = new V3(0.5f,0.5f,1);
+            if (sivusuunta == -1) lastflip = Time.time;
             sivusuunta = 1;
         }
         if (movedir.x < 0) {
             //GetComponent<SpriteRenderer>().flipX = true;
             transform.localScale = new V3(-0.5f,0.5f,1);
+            if (sivusuunta == 1) lastflip = Time.time;
             sivusuunta = -1;
         }
+
+        bodycollect = Time.time - lastflip < 1;
 
         float r = transform.rotation.eulerAngles.z;
         
@@ -74,8 +129,42 @@ public class sukeltajascript : MonoBehaviour
 
     }
 
+    public void Hurt(float damage, V3 impulse){
+        MouthBubb(damage);
+        GetComponent<Rigidbody2D>().AddForce(impulse*1000);
+    }
+
+    void AnimationStuff(){
+        if (movedir != V2.zero){
+            animpos += 0.15f;
+        }else{
+            animpos += 0.075f;
+        }
+        //if (animpos > 6) animpos -= 6;
+        float animposo = Mathf.Repeat(animpos, 6);
+        
+        if (movedir != V2.zero){
+            if (animposo < 1) GetComponent<SpriteRenderer>().sprite = images[0];
+            else if (animposo < 2) GetComponent<SpriteRenderer>().sprite = images[1];
+            else if (animposo < 3) GetComponent<SpriteRenderer>().sprite = images[2];
+            else if (animposo < 4) GetComponent<SpriteRenderer>().sprite = images[3];
+            else if (animposo < 5) GetComponent<SpriteRenderer>().sprite = images[2];
+            else GetComponent<SpriteRenderer>().sprite = images[1];
+        }
+        else{
+            if (animposo < 1) GetComponent<SpriteRenderer>().sprite = images[1];
+            else if (animposo < 2) GetComponent<SpriteRenderer>().sprite = images[4];
+            else if (animposo < 3) GetComponent<SpriteRenderer>().sprite = images[5];
+            else if (animposo < 4) GetComponent<SpriteRenderer>().sprite = images[2];
+            else if (animposo < 5) GetComponent<SpriteRenderer>().sprite = images[5];
+            else GetComponent<SpriteRenderer>().sprite = images[4];
+        }
+        transform.GetChild(1).localRotation = UnityEngine.Quaternion.Euler(0, 0,
+            Mathf.Sin(animpos*1.5f)*7-25);
+    }
+
     public void EatBubble(){
-        mittari.EatBubble();
+        //mittari.EatBubble();
     }
 
     // Update is called once per frame
@@ -93,6 +182,7 @@ public class sukeltajascript : MonoBehaviour
         else{
             wantrot = 0;
         }
+        wantrot += Mathf.Sin(Time.time)*4f;
         if (Input.GetKey(KeyCode.LeftArrow)){
             movedir += V2.left;
         }
@@ -102,4 +192,28 @@ public class sukeltajascript : MonoBehaviour
         movedir = movedir.normalized;
 
     }
+
+    public void Collect(CollectableData c)
+    {
+        switch (c.collectableType)
+        {
+            case CollectableType.NormalShell:
+                tData.shells += 1;
+                break;
+            case CollectableType.BigShell:
+                tData.shells += 4;
+                break;
+            case CollectableType.RainbowShell:
+                tData.shells += 15;
+                break;
+            case CollectableType.SmallBubble:
+                tData.oxygen = Mathf.Min(tData.maxOxygen, tData.oxygen + 3);
+                break;
+            case CollectableType.BigBubble:
+                tData.oxygen = Mathf.Min(tData.maxOxygen, tData.oxygen + 10);
+                break;
+        }
+    }
 }
+
+

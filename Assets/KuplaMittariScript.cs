@@ -11,7 +11,7 @@ public class KuplaMittariScript : MonoBehaviour
     public GameObject bubb;
     public List<GameObject> Bubbles;
     
-    void Awake(){
+    /*void Awake(){
         Bubbles = new List<GameObject>();
         BubbleCountFix();
     }
@@ -35,7 +35,7 @@ public class KuplaMittariScript : MonoBehaviour
 
         for(int i = 0; i < Bubbles.Count; i++){
             Bubbles[i].transform.position = new Vector3(50 + i*30, 50, 0);
-            if (i >= curr) {
+                if (i >= curr) {
                 Bubbles[i].GetComponent<UnityEngine.UI.Image>().color = new Color32(255, 255, 255, 50);
             }
             else {
@@ -56,5 +56,5 @@ public class KuplaMittariScript : MonoBehaviour
     void Update()
     {
         
-    }
+    }*/
 }

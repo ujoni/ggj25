@@ -8,7 +8,7 @@ public class ImeKupliaScript : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D coll){
-        GameObject.Destroy(coll.gameObject);
-        s.EatBubble();
+        /*GameObject.Destroy(coll.gameObject);
+        s.EatBubble();*/
     }
 }
