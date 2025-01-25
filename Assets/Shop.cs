@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using Unity.Properties;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Shop : MonoBehaviour
     public VisualTreeAsset listItem;
     public ShopData dShop = new();
     private VisualElement root;
+    private VisualElement[] inventorySlots = new VisualElement[13];
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,8 +17,19 @@ public class Shop : MonoBehaviour
         root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
         var itemList = root.Q<ListView>("ItemList");
         itemList.SetBinding("itemsSource", new DataBinding() { dataSourcePath = new PropertyPath("items") });
-
-        for (int i = 0; i < 2; i++)
+        var slots = root.Q<VisualElement>("Inventory").Children();
+        foreach (var slot in slots)
+        {
+            inventorySlots[slot.tabIndex] = slot;
+            slot.dataSource = dShop.inventory.upgrades[slot.tabIndex];
+            var remove = slot.Q<Button>("Remove");
+            remove.clicked += () =>
+            {
+                dShop.inventory.ClearSlot(slot.tabIndex);
+            };
+        }
+ 
+        for (int i = 0; i < 5; i++)
         {
             TurtleUpgrade u = new()
             {
@@ -33,12 +46,6 @@ public class Shop : MonoBehaviour
             itemList.hierarchy.Add(item);
             item.dataSource = u;
         }
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 }
