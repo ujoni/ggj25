@@ -49,8 +49,7 @@ public class Shop : MonoBehaviour
             var remove = slot.Q<Button>("Remove");
             remove.clicked += () =>
             {
-                dShop.inventory.ClearSlot(slot.tabIndex);
-                dShop.shells += 1;
+                dShop.shells += dShop.inventory.ClearSlot(slot.tabIndex);
             };
         }
 
