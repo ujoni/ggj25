@@ -25,7 +25,8 @@ public class sukeltajascript : MonoBehaviour
 
     UIDocument statusUI;
     UIDocument shopUI;
-    bool uiFlip = false;
+
+    UIState uiState = new();
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,7 +37,8 @@ public class sukeltajascript : MonoBehaviour
         var UIs = FindObjectsByType<UIDocument>(FindObjectsSortMode.None);
         statusUI = UIs.First(ui => ui.name == "StatusUI");
         shopUI = UIs.First(ui => ui.name == "ShopUI");
-        SetUIs();
+        statusUI.rootVisualElement.dataSource = uiState;
+        UpdateUIs();
         var turtleBar = statusUI.rootVisualElement.Q<VisualElement>("TurtleBar");
         turtleBar.dataSource = dTurtle;
 
@@ -47,11 +49,12 @@ public class sukeltajascript : MonoBehaviour
         startY = transform.position.y + 16;
     }
 
-    void SetUIs()
+    void UpdateUIs()
     {
-        statusUI.gameObject.SetActive(!uiFlip);
-        shopUI.gameObject.SetActive(uiFlip);
+        if (uiState.isShopVisible) shopUI.GetComponent<Shop>().PopulateShop(dTurtle);
+        else shopUI.GetComponent<Shop>().CloseShop();
     }
+
 
     void Bubb()
     {
@@ -104,18 +107,10 @@ public class sukeltajascript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Random.Range(0, 120) == 0)
+        if (!uiState.isShopVisible)
         {
-            //mittari.Lose(0.2f);
-
-            MouthBubb(0.5f);
-        }
-
-        if (Random.Range(0, 800) == 0)
-        {
-            //mittari.Lose(0.4f);
-
-            ArseBubb(1f);
+            if (Random.Range(0, 120) == 0) MouthBubb(0.5f);
+            if (Random.Range(0, 800) == 0) ArseBubb(1f);
         }
         AnimationStuff();
 
@@ -209,8 +204,8 @@ public class sukeltajascript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            uiFlip = !uiFlip;
-            SetUIs();
+            uiState.isBarVisible = !uiState.isBarVisible;
+            UpdateUIs();
             return;
         }
 

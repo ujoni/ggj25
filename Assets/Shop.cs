@@ -20,21 +20,25 @@ public class Shop : MonoBehaviour
     {
         var sukeltaja = FindFirstObjectByType<sukeltajascript>();
 
-        if (sukeltaja != null)
+        if (sukeltaja == null)
         {
-            Debug.Log("Using real turtle data");
-            // set shop initial values
-            dShop.shells = sukeltaja.dTurtle.shells;
-            dShop.inventory = sukeltaja.dTurtle.inventory.GetCopy();
-            currentDepth = sukeltaja.dTurtle.depth; // used for item gen
+            var td = new TurtleData();
+            td.shells = 100;
+            Debug.Log("Using test turtle data. Shells: " + td.shells);
+            PopulateShop(td);
         }
-        else
-        {
-            Debug.Log("Using test turtle data. Shells: " + dShop.shells);
-        }
+    }
 
+    public void PopulateShop(TurtleData turtleData)
+    {
+        dShop.shells = turtleData.shells;
+        dShop.inventory = turtleData.inventory.GetCopy();
+        currentDepth = turtleData.depth; // used for item gen
 
-        root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Root");
+        var uiDocument = GetComponent<UIDocument>();
+        uiDocument.enabled = true;
+
+        root = uiDocument.rootVisualElement.Q<VisualElement>("Root");
         var itemList = root.Q<ListView>("ItemList");
         itemList.SetBinding("itemsSource", new DataBinding() { dataSourcePath = new PropertyPath("items") });
         var slots = root.Q<VisualElement>("Inventory").Children();
@@ -78,6 +82,14 @@ public class Shop : MonoBehaviour
             itemList.hierarchy.Add(item);
             item.dataSource = u;
         }
+
+        root.dataSource = dShop;
+    }
+
+    public void CloseShop()
+    {
+        var uiDocument = GetComponent<UIDocument>();
+        uiDocument.enabled = false;
     }
 
     private static T RandomSelect<T>(List<T> value)

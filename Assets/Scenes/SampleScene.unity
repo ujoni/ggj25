@@ -2215,11 +2215,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6652501331808694731, guid: 05130d429d081dc4bbdb3eaa69e9e1f7, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6791884094230581526, guid: 05130d429d081dc4bbdb3eaa69e9e1f7, type: 3}
       propertyPath: m_Name
       value: ShopUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6791884094230581526, guid: 05130d429d081dc4bbdb3eaa69e9e1f7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
