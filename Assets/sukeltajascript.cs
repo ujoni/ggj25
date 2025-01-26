@@ -107,18 +107,10 @@ public class sukeltajascript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Random.Range(0, 120) == 0)
+        if (!uiState.isShopVisible)
         {
-            //mittari.Lose(0.2f);
-
-            MouthBubb(0.5f);
-        }
-
-        if (Random.Range(0, 800) == 0)
-        {
-            //mittari.Lose(0.4f);
-
-            ArseBubb(1f);
+            if (Random.Range(0, 120) == 0) MouthBubb(0.5f);
+            if (Random.Range(0, 800) == 0) ArseBubb(1f);
         }
         AnimationStuff();
 
