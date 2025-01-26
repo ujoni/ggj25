@@ -1,3 +1,3 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Label text="You found it!" style="color: rgb(255, 255, 255); font-size: 40px; -unity-text-align: upper-center;" />
+    <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/end.png?fileID=2800000&amp;guid=1d31ededb57c8574b989fc3fad309932&amp;type=3#end&quot;); -unity-background-scale-mode: scale-to-fit;" />
 </engine:UXML>
