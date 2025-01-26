@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: -1508259760738172304}
   - component: {fileID: 8121437566568298531}
   - component: {fileID: 3787891755255670102}
-  - component: {fileID: -5973769648118952109}
+  - component: {fileID: 7243911844769256834}
   m_Layer: 10
-  m_Name: RainbowNaki
+  m_Name: Helmi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -5390861309814785521, guid: 4139a6ba861523a48a9d37a77b272dc8, type: 3}
+  m_Sprite: {fileID: 2372651805560265800, guid: 6fbb8dae1f2711e4b8f1e4b99906895c, type: 3}
   m_Color: {r: 1, g: 0, b: 0.82404375, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength: 0.3
---- !u!114 &-5973769648118952109
+--- !u!114 &7243911844769256834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,6 +205,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1652971959218878440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efc7daae41e890a4b90195b0659d3b41, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b663694a75aca148acf3ab45abbf9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dems:
+  - {fileID: 2372651805560265800, guid: 6fbb8dae1f2711e4b8f1e4b99906895c, type: 3}
+  - {fileID: -8024018599206314248, guid: e84887d3320ec654e84b78223da8d609, type: 3}
+  - {fileID: -1906056644704717387, guid: 9926aea2d36dae342965f1a176d123cd, type: 3}
