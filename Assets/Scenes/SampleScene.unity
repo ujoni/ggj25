@@ -1481,6 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19c2f3d8a2ce394c969572a976c48f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kakka: {fileID: 1652971959218878440, guid: d81dbd214ce94494aafe482817736516, type: 3}
   bodycollect: 0
   bubb: {fileID: 5740042439521266560, guid: a90c131c9801dcc48bb6f5ca817165dd, type: 3}
   dTurtle:
@@ -2487,6 +2488,7 @@ MonoBehaviour:
   - {fileID: 3448380786066976092, guid: 9ee6999f17d309340a3721082c923101, type: 3}
   - {fileID: 3448380786066976092, guid: 7673b497694b5c74a8e091445461f1ae, type: 3}
   - {fileID: 3448380786066976092, guid: 6f3c11fdd7863a941b4134e558791877, type: 3}
+  helmisimpukka: {fileID: 1652971959218878440, guid: e99bb82309eb24045930e8eb8d40bf2d, type: 3}
   goodies:
   - {fileID: 1652971959218878440, guid: db5009df5f87d52479b3716604c19e81, type: 3}
   - {fileID: 1652971959218878440, guid: 6852607c4f997de4bb6796e44ab49701, type: 3}

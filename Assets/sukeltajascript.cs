@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 public class sukeltajascript : MonoBehaviour
 {
+    public GameObject kakka;
 
     V2 movedir;
     float speed;
@@ -209,6 +210,13 @@ public class sukeltajascript : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Kakkaa();
+            
+
+        }
+
         movedir = V2.zero;
         if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -235,6 +243,15 @@ public class sukeltajascript : MonoBehaviour
         }
         movedir = movedir.normalized;
 
+    }
+
+    void Kakkaa()
+    {
+        if (dTurtle.shells <= 0) return;
+        dTurtle.shells -= 1;
+        GameObject k = GameObject.Instantiate(kakka);
+        k.transform.position = transform.position - transform.right * 1.65f * sivusuunta;
+        k.GetComponent<Collectable>().timeout = Time.time + 3;
     }
 
     public void Collect(CollectableData c)
