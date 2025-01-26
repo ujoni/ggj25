@@ -146,9 +146,15 @@ public class TurtleInventory
 [Serializable]
 public class TurtleData
 {
+    private float _oxy = 20;
     public int shells = 0;
     public float depth = 0;
-    public float oxygen = 20;
+    [SerializeField]
+    public float oxygen
+    {
+        get { return _oxy; }
+        set { _oxy = Math.Min(maxOxygen, Math.Max(0, value)); }
+    }
     [SerializeField]
     public int maxOxygen
     {
