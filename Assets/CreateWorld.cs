@@ -48,7 +48,7 @@ public class CreateWorld : MonoBehaviour
     void Start()
     {
         WorldObjects = new List<GameObject>();
-        Random.InitState(661);
+        //Random.InitState(661);
 
         safes = new List<V2>();
         safenbrs = new List<V2>();
