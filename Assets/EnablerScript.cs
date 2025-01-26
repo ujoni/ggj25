@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using TMPro;

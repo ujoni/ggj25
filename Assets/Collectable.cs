@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Runtime.Serialization.Formatters;
-using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -4,9 +4,7 @@ using UnityEngine;
 using System.Linq;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
-using Unity.Collections;
-using System.Net.Http.Headers;
-using UnityEngine.ParticleSystemJobs;
+
 
 public class CreateWorld : MonoBehaviour
 {
@@ -39,7 +37,7 @@ public class CreateWorld : MonoBehaviour
     int SIZEY = 200;
 
     int KUPLAMIN = 100;
- 
+
     List<V2> holes;
 
     List<GameObject> WorldObjects;
@@ -79,7 +77,8 @@ public class CreateWorld : MonoBehaviour
         {
             V2 v = new V2(Random.Range(SIZEX / 5, 4 * SIZEX / 5), 1);
             SubdivideThingo(new V2(startx, starty), v);
-            if (i == 0) {
+            if (i == 0)
+            {
                 GameObject helmi = GameObject.Instantiate(helmisimpukka);
                 helmi.transform.position = CornerPoint(v.x, v.y);
                 WorldObjects.Add(helmi);
@@ -108,7 +107,7 @@ public class CreateWorld : MonoBehaviour
             if (goodies[g].GetComponent<BigScript>()) continue;
             for (int i = 0; i < goodieamounts[g]; i++)
             {
-                
+
                 MakeGoodie(g);
             }
         }
@@ -129,7 +128,7 @@ public class CreateWorld : MonoBehaviour
             }
         }
 
-        
+
 
         for (int i = 0; i < 120; i++)
         {
@@ -150,16 +149,20 @@ public class CreateWorld : MonoBehaviour
 
     }
 
-    void RemoveExcessTerrain(){
+    void RemoveExcessTerrain()
+    {
         List<V2> allfulls = new List<V2>();
         for (int ix = 0; ix < SIZEX; ix++)
         {
             for (int iy = 0; iy < SIZEY; iy++)
             {
                 bool allfull = true;
-                for (int xx = -2; xx <= 2; xx++) {
-                    for (int yy = -2; yy <= 2; yy++) {
-                        if (GetGrid(grid, ix+xx, iy+yy) == 0){
+                for (int xx = -2; xx <= 2; xx++)
+                {
+                    for (int yy = -2; yy <= 2; yy++)
+                    {
+                        if (GetGrid(grid, ix + xx, iy + yy) == 0)
+                        {
                             allfull = false;
                             break;
                         }
@@ -168,7 +171,8 @@ public class CreateWorld : MonoBehaviour
                 if (allfull) allfulls.Add(new V2(ix, iy));
             }
         }
-        foreach(V2 v in allfulls) {
+        foreach (V2 v in allfulls)
+        {
             SetGrid(grid, v.x, v.y, 0);
         }
     }
@@ -178,7 +182,8 @@ public class CreateWorld : MonoBehaviour
         V2 hole = holes[Random.Range(0, holes.Count)];
         while (SIZEY - hole.y < depthmins[g] || SIZEY - hole.y > depthmaxes[g] ||
             (goodies[g].GetComponent<BigScript>() != null &&
-            !BigEnoughHole(hole.x, hole.y) )){
+            !BigEnoughHole(hole.x, hole.y)))
+        {
             hole = holes[Random.Range(0, holes.Count)];
         }
         int amt = Random.Range(1, bunches[g] + 1);
@@ -186,22 +191,25 @@ public class CreateWorld : MonoBehaviour
         {
             GameObject good = GameObject.Instantiate(goodies[g]);
             WorldObjects.Add(good);
-            good.transform.position = CornerPoint(hole.x + Random.Range(-0.5f,0.5f),
-            hole.y + Random.Range(-0.5f,0.5f));
+            good.transform.position = CornerPoint(hole.x + Random.Range(-0.5f, 0.5f),
+            hole.y + Random.Range(-0.5f, 0.5f));
         }
     }
 
     // big enough hole for a big object?
-    bool BigEnoughHole(float x, float y){
+    bool BigEnoughHole(float x, float y)
+    {
         int left = 1;
         int right = 1;
-        int up = 1; 
+        int up = 1;
         int down = 0;
 
         int xx = (int)x;
         int yy = (int)y;
-        for (int xxx = xx-left; xxx <= xx + right+1; xxx ++){
-            for (int yyy = yy-down; yyy <= yy + up+1; yyy ++){
+        for (int xxx = xx - left; xxx <= xx + right + 1; xxx++)
+        {
+            for (int yyy = yy - down; yyy <= yy + up + 1; yyy++)
+            {
                 if (GetGrid(grid, xxx, yyy) != 0) return false;
             }
         }
@@ -247,23 +255,26 @@ public class CreateWorld : MonoBehaviour
         safenbrs.Add(n);
 
         GameObject p = GameObject.Instantiate(plants[Random.Range(0, plants.Length)]);
-        
-        V2 v = (hole + n)/2;
+
+        V2 v = (hole + n) / 2;
         //print(v);
         p.transform.position = CornerPoint(v.x, v.y);
-        if (n.x > hole.x) {
+        if (n.x > hole.x)
+        {
             p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 80);
         }
-        else if (n.x < hole.x) {
+        else if (n.x < hole.x)
+        {
             p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -80);
         }
         WorldObjects.Add(p);
-        
+
     }
 
     // from int point to actual world point
-    public V3 CornerPoint(float x, float y){
-        float c = Mathf.Min(1, (SIZEY - y)/10);
+    public V3 CornerPoint(float x, float y)
+    {
+        float c = Mathf.Min(1, (SIZEY - y) / 10);
         float d = 0.9f;
 
         return new V3(x * 10 + Mathf.PerlinNoise(y * 4, x * 4 + 120) * 2 * d +
@@ -396,9 +407,10 @@ public class CreateWorld : MonoBehaviour
         if (!holes.Contains(new V2(x, y))) holes.Add(new V2(x, y));
     }
 
-    public int GetGrid(int[,] grid, float x, float y){
-        if (badcoord((int)x, (int)y))return 1;
-        
+    public int GetGrid(int[,] grid, float x, float y)
+    {
+        if (badcoord((int)x, (int)y)) return 1;
+
         return grid[(int)x, (int)y];
     }
 
@@ -487,7 +499,8 @@ public class CreateWorld : MonoBehaviour
                                 }
                                 V2 p = V2.Lerp(c, c2, j / 25f);
                                 p = V2.MoveTowards(p, new V2(ix, iy), Mathf.Pow(inamt, 1.09f) * 0.02f);
-                                if (j < 25){
+                                if (j < 25)
+                                {
                                     pts.Add(CornerPoint(p.x, p.y));
                                     uvs.Add(CornerPointUV(p.x, p.y) * uvscale);
                                     norms.Add(V3.back);
@@ -500,34 +513,36 @@ public class CreateWorld : MonoBehaviour
                             List<V3> boundaryvertices = new List<V3>();
                             List<V2> boundaryuvs = new List<V2>();
                             List<V3> boundarynorms = new List<V3>();
-                            List<V3> actuals = pts.GetRange(pts.Count-25, 25);
+                            List<V3> actuals = pts.GetRange(pts.Count - 25, 25);
                             actuals.Add(lastpoint);
-                            for (int ii = 0; ii < 25; ii++) {
-                                boundaryvertices.Add(actuals[ii] - Vector3.forward*0.05f);
+                            for (int ii = 0; ii < 25; ii++)
+                            {
+                                boundaryvertices.Add(actuals[ii] - Vector3.forward * 0.05f);
                                 V3 innn = V3.MoveTowards(actuals[ii], center, 0.4f);
-                                boundaryvertices.Add(innn - Vector3.forward*0.05f);
+                                boundaryvertices.Add(innn - Vector3.forward * 0.05f);
                                 boundaryuvs.Add((V2)actuals[ii]);
                                 boundaryuvs.Add((V2)innn);
                                 boundarynorms.Add(Vector3.forward);
                                 boundarynorms.Add(Vector3.forward);
                             }
                             List<int> boundarytriangles = new List<int>();
-                            for (int ii = 0; ii < 24; ii++) {
-                                boundarytriangles.Add(2*ii);
-                                boundarytriangles.Add(2*ii+2);
-                                boundarytriangles.Add(2*ii+1);
-                                boundarytriangles.Add(2*ii+1);
-                                boundarytriangles.Add(2*ii+2);
-                                boundarytriangles.Add(2*ii+3);
+                            for (int ii = 0; ii < 24; ii++)
+                            {
+                                boundarytriangles.Add(2 * ii);
+                                boundarytriangles.Add(2 * ii + 2);
+                                boundarytriangles.Add(2 * ii + 1);
+                                boundarytriangles.Add(2 * ii + 1);
+                                boundarytriangles.Add(2 * ii + 2);
+                                boundarytriangles.Add(2 * ii + 3);
 
                             }
-                            
-                            
+
+
                             Mesh mb = new Mesh();
                             mb.vertices = boundaryvertices.ToArray();
                             mb.uv = boundaryuvs.ToArray();
                             mb.triangles = boundarytriangles.ToArray();
-                            mb.normals = boundarynorms.ToArray();           
+                            mb.normals = boundarynorms.ToArray();
                             mb.RecalculateBounds();
                             GameObject boundary = new GameObject();
                             boundary.name = "kikkoman";
