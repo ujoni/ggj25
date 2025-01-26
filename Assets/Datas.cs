@@ -116,9 +116,11 @@ public class TurtleInventory
         return true;
     }
 
-    public void ClearSlot(int slot)
+    public int ClearSlot(int slot)
     {
+        int shells = upgrades[slot].price;
         upgrades[slot].Reset();
+        return shells;
     }
 
     public int GetTotalLevels(UpgradeType forType)
