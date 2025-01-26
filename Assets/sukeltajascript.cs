@@ -4,10 +4,13 @@ using V3 = UnityEngine.Vector3;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System;
+using Random = UnityEngine.Random;
 public class sukeltajascript : MonoBehaviour
 {
     public GameObject kakka;
 
+    public AudioClip[] armclips;
     V2 movedir;
     float speed;
     int sivusuunta;
@@ -22,6 +25,7 @@ public class sukeltajascript : MonoBehaviour
     public TurtleData dTurtle = new TurtleData();
     public Sprite[] images;
 
+    public float conchaaudio;
     public float startY;
 
     UIDocument statusUI;
@@ -169,6 +173,8 @@ public class sukeltajascript : MonoBehaviour
 
     void AnimationStuff()
     {
+        float soundplace = 2.4f;
+        int derp = (int)(animpos + soundplace) / 6;
         if (movedir != V2.zero)
         {
             animpos += 0.15f;
@@ -179,6 +185,13 @@ public class sukeltajascript : MonoBehaviour
         }
         //if (animpos > 6) animpos -= 6;
         float animposo = Mathf.Repeat(animpos, 6);
+        if (derp < (int)((animpos + soundplace)/6))
+        {
+            GetComponent<AudioSource>().clip = armclips[Random.Range(0, 3)];
+            GetComponent<AudioSource>().volume = (movedir != V2.zero) ? 0.4f : 0.2f;
+            GetComponent<AudioSource>().pitch = 1 + Random.Range(-0.1f, 0.1f);
+            GetComponent<AudioSource>().Play();
+        }
 
         if (movedir != V2.zero)
         {
@@ -268,12 +281,15 @@ public class sukeltajascript : MonoBehaviour
         {
             case CollectableType.NormalShell:
                 dTurtle.shells += 1;
+                conchaaudio = Mathf.Max(Time.time + 2, conchaaudio);
                 break;
             case CollectableType.BigShell:
                 dTurtle.shells += 4;
+                conchaaudio = Mathf.Max(Time.time + 4, conchaaudio);
                 break;
             case CollectableType.RainbowShell:
                 dTurtle.shells += 15;
+                conchaaudio = Mathf.Max(Time.time + 6, conchaaudio);
                 break;
             case CollectableType.SmallBubble:
                 dTurtle.oxygen = Mathf.Min(dTurtle.maxOxygen, dTurtle.oxygen + 3);
