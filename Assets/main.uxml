@@ -32,7 +32,7 @@
             </engine:VisualElement>
         </engine:VisualElement>
         <Bindings>
-            <engine:DataBinding property="style.visibility" data-source-path="barVisibilityStyle" binding-mode="ToTarget" />
+            <engine:DataBinding property="style.display" data-source-path="barDisplayStyle" binding-mode="ToTarget" />
         </Bindings>
     </engine:VisualElement>
 </engine:UXML>
