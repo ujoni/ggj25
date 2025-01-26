@@ -13,11 +13,11 @@ public class EnablerScript : MonoBehaviour
     int inacts;
     int c ;
     bool initialized = false;
-    GameObject loggero;
+    //GameObject loggero;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start(){
-        loggero = GameObject.Find("Loggero");
+        //loggero = GameObject.Find("Loggero");
         Initialize();
     }
     public void Initialize()
@@ -103,7 +103,7 @@ public class EnablerScript : MonoBehaviour
         if (c % 50 == 0){
             ActivateClose();
             InActivateFar();
-            loggero.GetComponent<TMP_Text>().text = Time.time + " activated " + acts + " inactiavted "+ inacts + " curr active  " +actives.Count;
+            //loggero.GetComponent<TMP_Text>().text = Time.time + " activated " + acts + " inactiavted "+ inacts + " curr active  " +actives.Count;
         }
     }
 }
