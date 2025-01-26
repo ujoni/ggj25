@@ -70,7 +70,7 @@ public class MinimapScript : MonoBehaviour
             for (int iy = 0; iy < height; iy++){
                 int val = cw.GetGrid(cw.grid, left + ix + (int)pos.x, top + iy + (int)pos.y);
                 if (val == 0) grid[ix, iy].GetComponent<UnityEngine.UI.Image>().color =
-                    new Color(0.3f,0.3f,1f);
+                    new Color(0.6f,0.6f,1f);
                 if (val == 1) grid[ix, iy].GetComponent<UnityEngine.UI.Image>().color =
                     new Color(0.7f,0.6f,0.4f);
             }
@@ -136,13 +136,13 @@ public class MinimapScript : MonoBehaviour
             }
             if (closestx >= 0 && closestx < width && closesty >= 0 && closesty < height){
                 if (saukkos.Contains(obj))
-                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.white;
+                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.blue;
                 else if (collectables.Contains(obj))
                     grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.green;
                 else if (creatures.Contains(obj))
                     grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.red;
                 else if (plants.Contains(obj))
-                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.blue;
+                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.white;
             }
         }
 
