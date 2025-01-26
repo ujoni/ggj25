@@ -146,9 +146,11 @@ public class TurtleInventory
 [Serializable]
 public class TurtleData
 {
-    private float _oxy = 20;
+
     public int shells = 0;
     public float depth = 0;
+
+    private float _oxy = 20;
     [SerializeField]
     public float oxygen
     {
@@ -197,6 +199,24 @@ public class ShopData
     public TurtleInventory inventory = new();
 }
 
+[Serializable]
+public class UIState
+{
+    public bool isBarVisible = true;
+
+    [SerializeField]
+    public StyleEnum<Visibility> barVisibilityStyle
+    {
+        get { return isBarVisible ? Visibility.Visible : Visibility.Hidden; }
+    }
+
+    [SerializeField]
+    public bool isShopVisible
+    {
+        get { return !isBarVisible; }
+    }
+}
+
 
 public class UIConverters
 {
@@ -204,10 +224,8 @@ public class UIConverters
     public static void InitConverters()
     {
         ConverterGroup shopGroup = new("shop");
-
         shopGroup.AddConverter((ref int level) => TurtleUpgrade.LevelToString(level));
         shopGroup.AddConverter((ref UpgradeType type) => TurtleUpgrade.TypeToString(type));
-
         ConverterGroups.RegisterConverterGroup(shopGroup);
     }
 }
