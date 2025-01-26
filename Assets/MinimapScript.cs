@@ -79,6 +79,7 @@ public class MinimapScript : MonoBehaviour
         //print(colls.Length);
         HashSet<GameObject> collectables = new HashSet<GameObject>();
         HashSet<GameObject> saukkos = new HashSet<GameObject>();
+        HashSet<GameObject> creatures = new HashSet<GameObject>();
         foreach (Collider2D coll in colls) {
             if (coll.GetComponent<Collectable>()){
                 //print("yes");
@@ -93,11 +94,16 @@ public class MinimapScript : MonoBehaviour
                 //print("Yes");
                 saukkos.Add(coll.gameObject);
             }
+            if (coll.gameObject.GetComponent<CreatureScript>() != null){
+                //print("Yes");
+                creatures.Add(coll.gameObject);
+            }
 
         }
 
         List<GameObject> dems = collectables.ToList<GameObject>();
         dems.AddRange(saukkos.ToList<GameObject>());
+        dems.AddRange(creatures.ToList<GameObject>());
 
         //print(saukkos.Count);
                    
@@ -122,8 +128,10 @@ public class MinimapScript : MonoBehaviour
             if (closestx >= 0 && closestx < width && closesty >= 0 && closesty < height){
                 if (saukkos.Contains(obj))
                     grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.blue;
-                else
+                else if (collectables.Contains(obj))
                     grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.green;
+                else if (creatures.Contains(obj))
+                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.red;
             }
         }
 

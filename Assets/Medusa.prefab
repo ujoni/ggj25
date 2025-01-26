@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3471564365103430400}
   - component: {fileID: 6687667136775894880}
   - component: {fileID: 2605648657767124184}
+  - component: {fileID: 1421446990696040471}
   m_Layer: 0
   m_Name: Medusa
   m_TagString: Untagged
@@ -75,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6f8864d462e254c8442e4c9e47b56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength: 0
 --- !u!114 &6687667136775894880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cddc698bbd5050b4892f9704ed36a37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength: 0
 --- !u!114 &2605648657767124184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +100,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1fa6acc10063a7419985c26fe48ec1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 0
+--- !u!114 &1421446990696040471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634072573864247078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13abd353bbc81dd4b9ece97e883051a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4154899665304466649

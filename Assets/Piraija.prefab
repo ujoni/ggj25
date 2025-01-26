@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 3099650151547068640}
   - component: {fileID: 3517265799473423297}
   - component: {fileID: 541374070124211187}
+  - component: {fileID: 119178240029353749}
   m_Layer: 11
   m_Name: Piraija
   m_TagString: Untagged
@@ -290,3 +291,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+--- !u!114 &119178240029353749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062450931553167125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13abd353bbc81dd4b9ece97e883051a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
