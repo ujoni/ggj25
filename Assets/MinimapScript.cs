@@ -69,8 +69,10 @@ public class MinimapScript : MonoBehaviour
         for (int ix = 0; ix < width; ix++){
             for (int iy = 0; iy < height; iy++){
                 int val = cw.GetGrid(cw.grid, left + ix + (int)pos.x, top + iy + (int)pos.y);
-                if (val == 0) grid[ix, iy].GetComponent<UnityEngine.UI.Image>().color = Color.gray;
-                if (val == 1) grid[ix, iy].GetComponent<UnityEngine.UI.Image>().color = Color.white;
+                if (val == 0) grid[ix, iy].GetComponent<UnityEngine.UI.Image>().color =
+                    new Color(0.3f,0.3f,1f);
+                if (val == 1) grid[ix, iy].GetComponent<UnityEngine.UI.Image>().color =
+                    new Color(0.7f,0.6f,0.4f);
             }
         }
 
@@ -80,6 +82,7 @@ public class MinimapScript : MonoBehaviour
         HashSet<GameObject> collectables = new HashSet<GameObject>();
         HashSet<GameObject> saukkos = new HashSet<GameObject>();
         HashSet<GameObject> creatures = new HashSet<GameObject>();
+        HashSet<GameObject> plants = new HashSet<GameObject>();
         foreach (Collider2D coll in colls) {
             if (coll.GetComponent<Collectable>()){
                 //print("yes");
@@ -99,11 +102,17 @@ public class MinimapScript : MonoBehaviour
                 creatures.Add(coll.gameObject);
             }
 
+            if (coll.gameObject.GetComponent<CreateBubblesScript>() != null){
+                //print("Yes");
+                plants.Add(coll.gameObject);
+            }
+
         }
 
         List<GameObject> dems = collectables.ToList<GameObject>();
         dems.AddRange(saukkos.ToList<GameObject>());
         dems.AddRange(creatures.ToList<GameObject>());
+        dems.AddRange(plants.ToList<GameObject>());
 
         //print(saukkos.Count);
                    
@@ -127,11 +136,13 @@ public class MinimapScript : MonoBehaviour
             }
             if (closestx >= 0 && closestx < width && closesty >= 0 && closesty < height){
                 if (saukkos.Contains(obj))
-                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.blue;
+                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.white;
                 else if (collectables.Contains(obj))
                     grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.green;
                 else if (creatures.Contains(obj))
                     grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.red;
+                else if (plants.Contains(obj))
+                    grid[closestx, closesty].GetComponent<UnityEngine.UI.Image>().color = Color.blue;
             }
         }
 
