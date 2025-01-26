@@ -34,6 +34,8 @@ public class sukeltajascript : MonoBehaviour
 
     UIState uiState = new();
 
+    bool touchingShop = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -236,7 +238,8 @@ public class sukeltajascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        var canActuateShop = touchingShop || uiState.isShopVisible;
+        if (canActuateShop && Input.GetKeyDown(KeyCode.Space))
         {
             uiState.isBarVisible = !uiState.isBarVisible;
             UpdateUIs();
@@ -306,6 +309,18 @@ public class sukeltajascript : MonoBehaviour
                 dTurtle.oxygen = Mathf.Min(dTurtle.maxOxygen, dTurtle.oxygen + 10);
                 break;
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        var saukko = collider.gameObject.GetComponent<SaukkoScript>();
+        if (saukko != null) touchingShop = true;
+    }
+
+    void OnCollisionExit2D(Collision2D collider)
+    {
+        var saukko = collider.gameObject.GetComponent<SaukkoScript>();
+        if (saukko != null) touchingShop = false;
     }
 }
 
