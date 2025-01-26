@@ -1,4 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/MenuStyle.uss?fileID=7433441132597879392&amp;guid=d28ae5da7763a5346a49b5e06ab75fc0&amp;type=3#MenuStyle" />
     <engine:VisualElement data-source-type="TurtleUpgrade, Assembly-CSharp" name="UpgradeSlot" enabled="true" style="flex-grow: 0; flex-shrink: 0; position: absolute; width: 60px; height: 60px; top: auto; left: auto; justify-content: space-around; align-items: center; visibility: visible; display: flex; background-image: none; -unity-background-scale-mode: stretch-to-fill; background-position-y: top 0; background-position-x: left 0; background-size: cover;">
         <engine:VisualElement name="Logo" style="flex-grow: 1; position: absolute; width: 80px; height: 80px; top: -10px; left: -10px; background-image: resource(&apos;upgrade_happi&apos;); -unity-background-scale-mode: scale-to-fit; background-size: 120% 120%;">
             <Bindings>
