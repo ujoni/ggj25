@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -54,12 +56,18 @@ public class Shop : MonoBehaviour
         }
 
 
-        // TODO: some depth-specific shop population (2 to 5 items?)
-        for (int i = 0; i < 5; i++)
+        var depth = Math.Max(0, currentDepth);
+        // it just keeps on going
+        var curve = (int)Math.Floor((depth + 20) / (20 + Math.Pow(depth + 1, 0.8)));
+        Debug.Log("Shop curve is " + curve);
+        var loopMax = UnityEngine.Random.Range(2, Math.Max(2, 1 + curve) + 1);
+        var levelMax = Math.Max(1, curve) + 1;
+
+        for (int i = 0; i < loopMax; i++)
         {
             TurtleUpgrade u = new()
             {
-                level = i + 1,
+                level = UnityEngine.Random.Range(1, levelMax),
                 type = RandomSelect(UPGRADE_TYPES),
             };
 
@@ -100,7 +108,7 @@ public class Shop : MonoBehaviour
 
     private static T RandomSelect<T>(List<T> value)
     {
-        var i = UnityEngine.Random.Range(0, value.Count - 1);
+        var i = UnityEngine.Random.Range(0, value.Count);
         return value[i];
     }
 
