@@ -1,10 +1,15 @@
-# SHELLDIVER
+![Shelldivers](/Assets/titlescreen.png)
 
 ## What
 
 Global Game Jam -25 game with the theme of "Bubble".
 
 In this game, you are a deep-diving sea turtle looking for legenday pearl from the depths of the sea caverns (?!).
+
+### Diversifiers
+
+- Tranquility
+- Sharing is Caring
 
 ## How
 
