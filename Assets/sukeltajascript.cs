@@ -245,6 +245,15 @@ public class sukeltajascript : MonoBehaviour
             UpdateUIs();
         }
 
+        if (Input.GetKey(KeyCode.Y) &&
+            Input.GetKey(KeyCode.E) &&
+            Input.GetKey(KeyCode.S)) {
+                GameObject h = GameObject.Find("Helmi(Clone)");
+                if (h != null)
+                    transform.position = h.transform.position + new V3(Random.Range(-15f, 15f),
+                        10, 0 );
+            }
+
         if (uiState.isShopVisible) return; // we in shop. no move, only stay
 
         if (Input.GetKeyDown(KeyCode.A)) Kakkaa();
