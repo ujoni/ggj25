@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7966068708186472124}
   - component: {fileID: 325385053959408297}
-  - component: {fileID: 808524809356742658}
   m_Layer: 11
   m_Name: GameObject
   m_TagString: Untagged
@@ -69,18 +68,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.17019653, y: -0.13249207}
   m_Radius: 6.15213
---- !u!114 &808524809356742658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8015167734856246916}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4682891d2f9ba2745b4d915a90693d45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &9062450931553167125
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,6 +83,7 @@ GameObject:
   - component: {fileID: 8095899872269263782}
   - component: {fileID: 8747290557796233524}
   - component: {fileID: 3099650151547068640}
+  - component: {fileID: 3517265799473423297}
   m_Layer: 11
   m_Name: Kala
   m_TagString: Untagged
@@ -262,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cddc698bbd5050b4892f9704ed36a37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength: 0.001
 --- !u!114 &3099650151547068640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,3 +264,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength: 0.4
+--- !u!114 &3517265799473423297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062450931553167125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2bc57c6ea917f4da70ddb463beb5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

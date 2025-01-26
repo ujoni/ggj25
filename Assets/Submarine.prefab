@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2719201312836034479}
   - component: {fileID: 597411605140288675}
   - component: {fileID: 5842404415618390273}
+  - component: {fileID: -5707449827238194529}
   m_Layer: 0
   m_Name: Submarine
   m_TagString: Submarine
@@ -130,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6f8864d462e254c8442e4c9e47b56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength: 0
 --- !u!70 &597411605140288675
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -177,5 +179,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1abc1af899b26843bc2297b3b5a164d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5707449827238194529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4544621695844748893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262e1b6f28f22aa4f812096017fcbe09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

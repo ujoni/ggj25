@@ -38,18 +38,22 @@ public class CreateWorld : MonoBehaviour
 
 
 
-    int[,] grid;
-    int startx = 75;
-    int starty = 199;
+    public int[,] grid;
+    public int startx = 75;
+    public int starty = 199;
     int SIZEX = 150;
     int SIZEY = 200;
 
     int KUPLAMIN = 100;
+ 
     List<V2> holes;
+
+    List<GameObject> WorldObjects;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        WorldObjects = new List<GameObject>();
         Random.InitState(660);
 
         safes = new List<V2>();
@@ -116,6 +120,9 @@ public class CreateWorld : MonoBehaviour
             }
         }*/
 
+        GameObject.Find("Enabler").GetComponent<EnablerScript>().objects = WorldObjects;
+        GameObject.Find("Enabler").GetComponent<EnablerScript>().Initialize();
+
     }
 
     void MakeGoodie(int g){
@@ -126,6 +133,7 @@ public class CreateWorld : MonoBehaviour
         int amt = Random.Range(1, bunches[g]+1);
         for( int t = 0; t < amt; t++){
             GameObject good = GameObject.Instantiate(goodies[g]);
+            WorldObjects.Add(good);
             good.transform.position = CornerPoint(hole.x + Random.Range(-0.5f,0.5f),
             hole.y + Random.Range(-0.5f,0.5f));
         }
@@ -155,6 +163,7 @@ public class CreateWorld : MonoBehaviour
             safenbrs.Add(n);
 
             GameObject p = GameObject.Instantiate(plants[Random.Range(0, plants.Length)]);
+            WorldObjects.Add(p);
             V2 v = (hole + n)/2;
             //print(v);
             p.transform.position = CornerPoint(v.x, v.y);
@@ -168,7 +177,7 @@ public class CreateWorld : MonoBehaviour
     }
 
     // from int point to actual world point
-    V3 CornerPoint(float x, float y){
+    public V3 CornerPoint(float x, float y){
         float c = Mathf.Min(1, (SIZEY - y)/10);
         float d = 0.9f;
 
@@ -287,7 +296,7 @@ public class CreateWorld : MonoBehaviour
         if (!holes.Contains(new V2(x, y))) holes.Add(new V2(x, y));
     }
 
-    int GetGrid(int[,] grid, float x, float y){
+    public int GetGrid(int[,] grid, float x, float y){
         if (badcoord((int)x, (int)y))return 1;
         
         return grid[(int)x, (int)y];

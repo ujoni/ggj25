@@ -8,18 +8,21 @@ public class CreateBubblesScript : MonoBehaviour
     GameObject turtle;
 
     int moodi;
+    int dens;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         turtle = GameObject.Find("Sukeltaja");
         moodi = 0;
+        dens = 5;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Vector3.Distance(transform.position, turtle.transform.position) > 30) return;
+        // print(turtle);
+        if (Vector3.Distance(transform.position, turtle.transform.position) > 20) return;
         if(Random.Range(0, 100) == 0) {
             moodi = Random.Range(0, 2);
             if (Random.Range(0,5) == 0){
@@ -34,8 +37,12 @@ public class CreateBubblesScript : MonoBehaviour
                 }
             }
         }
+        
         if (moodi == 2){
-            if(Random.Range(0, 5) == 0) {
+            if (Random.Range(0,10) == 0){
+                dens = Random.Range(5,14);
+            }
+            if(Random.Range(0, dens) == 0) {
                 Bubb();
             }
         }
