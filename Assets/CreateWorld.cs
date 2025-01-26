@@ -6,11 +6,13 @@ using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using Unity.Collections;
 using System.Net.Http.Headers;
+using UnityEngine.ParticleSystemJobs;
 
 public class CreateWorld : MonoBehaviour
 {
 
     public Material maamat;
+    public Material boundarymat;
     public GameObject sukeltaja;
     public GameObject[] plants;
     public GameObject helmisimpukka;
@@ -412,12 +414,12 @@ public class CreateWorld : MonoBehaviour
             {
                 if (grid[ix, iy] == 1)
                 {
-
+                    V3 center = CornerPoint(ix, iy);
                     List<V3> pts = new List<V3>();
                     List<V2> uvs = new List<V2>();
                     List<V3> norms = new List<V3>();
-                    pts.Add(CornerPoint(ix, iy));
-                    uvs.Add(CornerPointUV(ix, iy) * uvscale);
+                    pts.Add(center);
+                    uvs.Add((CornerPointUV(ix, iy)) * uvscale);
                     norms.Add(V3.back);
                     List<V2> corners = new List<V2>{
                         new V2(ix-0.5f, iy-0.5f),
@@ -489,6 +491,45 @@ public class CreateWorld : MonoBehaviour
                                 uvs.Add(CornerPointUV(p.x, p.y) * uvscale);
                                 norms.Add(V3.back);
                             }
+
+                            // we also want to make boundary
+                            List<V3> boundaryvertices = new List<V3>();
+                            List<V2> boundaryuvs = new List<V2>();
+                            List<V3> boundarynorms = new List<V3>();
+                            List<V3> actuals = pts.GetRange(pts.Count-25, 25);
+                            for (int ii = 0; ii < 25; ii++) {
+                                boundaryvertices.Add(actuals[ii]);
+                                V3 innn = V3.MoveTowards(actuals[ii], center, 0.2f);
+                                boundaryvertices.Add(innn);
+                                boundaryuvs.Add((V2)actuals[ii]);
+                                boundaryuvs.Add((V2)innn);
+                                boundarynorms.Add(Vector3.forward);
+                                boundarynorms.Add(Vector3.forward);
+                            }
+                            List<int> boundarytriangles = new List<int>();
+                            for (int ii = 0; ii < 24; ii++) {
+                                boundarytriangles.Add(2*ii);
+                                boundarytriangles.Add(2*ii+2);
+                                boundarytriangles.Add(2*ii+1);
+                                boundarytriangles.Add(2*ii+1);
+                                boundarytriangles.Add(2*ii+2);
+                                boundarytriangles.Add(2*ii+3);
+
+                            }
+                            
+                            
+                            Mesh mb = new Mesh();
+                            mb.vertices = boundaryvertices.ToArray();
+                            mb.uv = boundaryuvs.ToArray();
+                            mb.triangles = boundarytriangles.ToArray();
+                            mb.normals = boundarynorms.ToArray();           
+                            mb.RecalculateBounds();
+                            GameObject boundary = new GameObject();
+                            boundary.name = "kikkoman";
+                            boundary.AddComponent<MeshFilter>().mesh = mb;
+                            MeshRenderer mbr = boundary.AddComponent<MeshRenderer>();
+                            mbr.material = boundarymat;
+
                         }
                     }
 
