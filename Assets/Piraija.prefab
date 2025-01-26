@@ -86,6 +86,8 @@ GameObject:
   - component: {fileID: 3517265799473423297}
   - component: {fileID: 541374070124211187}
   - component: {fileID: 119178240029353749}
+  - component: {fileID: 3978557610779689646}
+  - component: {fileID: 6983616098191241683}
   m_Layer: 11
   m_Name: Piraija
   m_TagString: Untagged
@@ -153,7 +155,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8966945178157639174, guid: 74b68b2759dd9554c9f5a9f8e88d9163, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c261cd6017af0a45961d180557eaf26, type: 3}
   m_Color: {r: 0, g: 0.5294118, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -301,5 +303,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13abd353bbc81dd4b9ece97e883051a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3978557610779689646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062450931553167125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc7daae41e890a4b90195b0659d3b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6983616098191241683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062450931553167125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6293fcab2751aa4b9cd3fdc345bb703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -461,7 +461,7 @@ public class CreateWorld : MonoBehaviour
                         }
 
                         // if this side has stuff, just make a straight, i.e. only add corner point
-                        if (!checkocurr)
+                        if (!checkocurr && c.y != SIZEY - 1)
                         {
                             pts.Add(CornerPoint(c.x, c.y));
                             uvs.Add((V2)CornerPointUV(c.x, c.y) * uvscale);
@@ -471,9 +471,9 @@ public class CreateWorld : MonoBehaviour
                         // otherwise make a nice curvy side
                         else
                         {
-
+                            V3 lastpoint = Vector3.zero;
                             // physical corner points
-                            for (int j = 0; j < 25; j++)
+                            for (int j = 0; j <= 25; j++)
                             {
                                 float inamt = 0;
                                 if (cinning && j < 5)
@@ -487,20 +487,25 @@ public class CreateWorld : MonoBehaviour
                                 }
                                 V2 p = V2.Lerp(c, c2, j / 25f);
                                 p = V2.MoveTowards(p, new V2(ix, iy), Mathf.Pow(inamt, 1.09f) * 0.02f);
-                                pts.Add(CornerPoint(p.x, p.y));
-                                uvs.Add(CornerPointUV(p.x, p.y) * uvscale);
-                                norms.Add(V3.back);
+                                if (j < 25){
+                                    pts.Add(CornerPoint(p.x, p.y));
+                                    uvs.Add(CornerPointUV(p.x, p.y) * uvscale);
+                                    norms.Add(V3.back);
+                                }
+                                else lastpoint = p;
                             }
+
 
                             // we also want to make boundary
                             List<V3> boundaryvertices = new List<V3>();
                             List<V2> boundaryuvs = new List<V2>();
                             List<V3> boundarynorms = new List<V3>();
                             List<V3> actuals = pts.GetRange(pts.Count-25, 25);
+                            actuals.Add(lastpoint);
                             for (int ii = 0; ii < 25; ii++) {
-                                boundaryvertices.Add(actuals[ii]);
+                                boundaryvertices.Add(actuals[ii] - Vector3.forward*0.05f);
                                 V3 innn = V3.MoveTowards(actuals[ii], center, 0.4f);
-                                boundaryvertices.Add(innn);
+                                boundaryvertices.Add(innn - Vector3.forward*0.05f);
                                 boundaryuvs.Add((V2)actuals[ii]);
                                 boundaryuvs.Add((V2)innn);
                                 boundarynorms.Add(Vector3.forward);

@@ -6,12 +6,12 @@ using V3 = UnityEngine.Vector3;
 
 public class FollowFriend : MonoBehaviour
 {
-
+    public float strength;
     GameObject followed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (strength == 0) strength = 5;
     }
 
     // Update is called once per frame
@@ -25,7 +25,8 @@ public class FollowFriend : MonoBehaviour
                 //if (c.gameObject.layer)
                 float d = V3.Distance(c.gameObject.transform.position, transform.position);
                 if (d < 0.5f) continue;
-                if (d < mind || (Random.Range(0,2) == 0 && d < 10 && c.gameObject.layer == LayerMask.NameToLayer("Turtle"))){
+                if (d < mind || (Random.Range(0,2) == 0 && d < 10 &&
+                    c.gameObject.layer == LayerMask.NameToLayer("Turtle"))){
                     mind = d;
                     followed = c.gameObject;
                 }
@@ -35,7 +36,7 @@ public class FollowFriend : MonoBehaviour
 
         if (followed != null) {
             V3 off = (followed.transform.position - transform.position).normalized;
-            GetComponent<Rigidbody2D>().AddForce(off*5);
+            GetComponent<Rigidbody2D>().AddForce(off*strength);
             //transform.LookAt(followed);
             transform.rotation = Quaternion.Euler(0, 0, -Mathf.Atan2(off.y, off.x)*Mathf.Rad2Deg) ;
         }

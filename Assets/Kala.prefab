@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 3099650151547068640}
   - component: {fileID: 3517265799473423297}
   - component: {fileID: -5748511008498482535}
+  - component: {fileID: 1374685945375268433}
   m_Layer: 11
   m_Name: Kala
   m_TagString: Untagged
@@ -152,12 +153,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8966945178157639174, guid: 74b68b2759dd9554c9f5a9f8e88d9163, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c261cd6017af0a45961d180557eaf26, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.52, y: 1.34}
+  m_Size: {x: 8.16, y: 5.93}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -287,5 +288,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13abd353bbc81dd4b9ece97e883051a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1374685945375268433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9062450931553167125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6293fcab2751aa4b9cd3fdc345bb703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
