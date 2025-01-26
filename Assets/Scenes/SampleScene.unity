@@ -3792,12 +3792,12 @@ MonoBehaviour:
   - {fileID: 9062450931553167125, guid: 3bff312dd3117e54d9eda752bd3f26bf, type: 3}
   - {fileID: 9062450931553167125, guid: 76a9c6b98a6f18f4c8d48faf0e5e022a, type: 3}
   depthmins:
-  - 0
+  - 3
   - 30
   - 100
-  - 0
+  - 3
   - 25
-  - 0
+  - 3
   - 100
   - 40
   - 140
