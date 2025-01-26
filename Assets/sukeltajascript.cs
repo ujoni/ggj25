@@ -122,6 +122,9 @@ public class sukeltajascript : MonoBehaviour
     void FixedUpdate()
     {
         if (dTurtle.oxygen <= 0) {
+            while (dTurtle.shells > 0) {
+                Kakkaa();
+            }
             transform.position = savepos;
             dTurtle.oxygen = dTurtle.maxOxygen;
         }
