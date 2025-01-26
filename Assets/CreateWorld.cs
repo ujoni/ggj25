@@ -499,7 +499,7 @@ public class CreateWorld : MonoBehaviour
                             List<V3> actuals = pts.GetRange(pts.Count-25, 25);
                             for (int ii = 0; ii < 25; ii++) {
                                 boundaryvertices.Add(actuals[ii]);
-                                V3 innn = V3.MoveTowards(actuals[ii], center, 0.2f);
+                                V3 innn = V3.MoveTowards(actuals[ii], center, 0.4f);
                                 boundaryvertices.Add(innn);
                                 boundaryuvs.Add((V2)actuals[ii]);
                                 boundaryuvs.Add((V2)innn);
