@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.Serialization.Formatters;
+using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,26 +36,24 @@ public class Collectable : MonoBehaviour
             collider.gameObject.GetComponent<sukeltajascript>().Collect(cData);
             if (GetComponent<AudioSource>())
             {
-                GameObject tempAudio = new GameObject("TempAudio");
-                //tempAudio.transform.position = position;
 
-                AudioSource audioSource = tempAudio.AddComponent<AudioSource>();
-                audioSource.clip = GetComponent<AudioSource>().clip;
-                audioSource.Play();
+                if (name == "Helmi(Clone)") SceneManager.LoadScene("EndScene");
+                else
+                {
+                    GameObject tempAudio = new GameObject("TempAudio");
+                    //tempAudio.transform.position = position;
 
-                // Destroy the temporary GameObject after the clip has finished playing
-                Destroy(tempAudio, audioSource.clip.length);
-                StartCoroutine(LoadEndScene(audioSource.clip.length + 0.5f));
+                    AudioSource audioSource = tempAudio.AddComponent<AudioSource>();
+                    audioSource.clip = GetComponent<AudioSource>().clip;
+                    audioSource.Play();
+                    // Destroy the temporary GameObject after the clip has finished playing
+                    Destroy(tempAudio, audioSource.clip.length);
+                }
             }
             Destroy(gameObject);
 
         }
     }
 
-    private IEnumerator LoadEndScene(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene("EndScene");
-    }
 }
 
