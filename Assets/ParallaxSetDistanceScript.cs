@@ -19,7 +19,9 @@ public class ParallaxSetDistanceScript : MonoBehaviour
     void Update()
     {
         float diff = top.transform.position.y - player.transform.position.y;
-        if (diff > 20) diff = 20;
+        if (diff > 40) diff = 40;
+        if (diff < 20) diff = 20;
+        diff = diff-20;
         transform.position = new V3(transform.position.x, transform.position.y, diff/20*initdepth);
     }
 }

@@ -132,7 +132,7 @@ public class CreateWorld : MonoBehaviour
         }*/
 
         GameObject.Find("Enabler").GetComponent<EnablerScript>().objects = WorldObjects;
-        GameObject.Find("Enabler").GetComponent<EnablerScript>().Initialize();
+        //GameObject.Find("Enabler").GetComponent<EnablerScript>().Initialize();
 
     }
 
@@ -209,17 +209,18 @@ public class CreateWorld : MonoBehaviour
         safes.Add(hole);
         safenbrs.Add(n);
 
-            GameObject p = GameObject.Instantiate(plants[Random.Range(0, plants.Length)]);
-            WorldObjects.Add(p);
-            V2 v = (hole + n)/2;
-            //print(v);
-            p.transform.position = CornerPoint(v.x, v.y);
-            if (n.x > hole.x) {
-                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 70);
-            }
-            else if (n.x < hole.x) {
-                p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -70);
-            }
+        GameObject p = GameObject.Instantiate(plants[Random.Range(0, plants.Length)]);
+        
+        V2 v = (hole + n)/2;
+        //print(v);
+        p.transform.position = CornerPoint(v.x, v.y);
+        if (n.x > hole.x) {
+            p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 70);
+        }
+        else if (n.x < hole.x) {
+            p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -70);
+        }
+        //WorldObjects.Add(p);
         
     }
 

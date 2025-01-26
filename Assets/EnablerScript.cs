@@ -32,6 +32,7 @@ public class EnablerScript : MonoBehaviour
         c = 0;
          
          foreach(GameObject obj in objects){
+            print(obj);
             InActonate(obj);
          }
          //print(rootobjects.Count);
@@ -92,7 +93,7 @@ public class EnablerScript : MonoBehaviour
             mono.enabled = false;
         }
         foreach(Renderer r in go.GetComponents<Renderer>()) {
-            r.enabled = false;
+            //r.enabled = false;
         }
         foreach(Rigidbody2D rb in go.GetComponents<Rigidbody2D>()) {
             rb.bodyType = RigidbodyType2D.Static;
