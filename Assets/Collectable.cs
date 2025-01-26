@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Runtime.Serialization.Formatters;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Collectable : MonoBehaviour
 {
@@ -30,7 +33,8 @@ public class Collectable : MonoBehaviour
             collected = true;
             // GetComponent<SpriteRenderer>().color = Color.red;
             collider.gameObject.GetComponent<sukeltajascript>().Collect(cData);
-            if (GetComponent<AudioSource>()) {
+            if (GetComponent<AudioSource>())
+            {
                 GameObject tempAudio = new GameObject("TempAudio");
                 //tempAudio.transform.position = position;
 
@@ -40,10 +44,17 @@ public class Collectable : MonoBehaviour
 
                 // Destroy the temporary GameObject after the clip has finished playing
                 Destroy(tempAudio, audioSource.clip.length);
+                StartCoroutine(LoadEndScene(audioSource.clip.length + 0.5f));
             }
             Destroy(gameObject);
-            
+
         }
+    }
+
+    private IEnumerator LoadEndScene(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene("EndScene");
     }
 }
 
