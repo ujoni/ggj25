@@ -2,11 +2,8 @@ using UnityEngine;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
 using System.Linq;
-using System;
 using Random = UnityEngine.Random;
-using UnityEngine.Jobs;
 public class sukeltajascript : MonoBehaviour
 {
     public GameObject kakka;
