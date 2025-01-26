@@ -3699,6 +3699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maamat: {fileID: 2100000, guid: 327cec014eb61184e8337a339fcc47e5, type: 2}
+  boundarymat: {fileID: 2100000, guid: 327cec014eb61184e8337a339fcc47e5, type: 2}
   sukeltaja: {fileID: 969450363}
   plants:
   - {fileID: 3448380786066976092, guid: 9ee6999f17d309340a3721082c923101, type: 3}
