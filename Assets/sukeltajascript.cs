@@ -123,13 +123,13 @@ public class sukeltajascript : MonoBehaviour
         float capacityproblem = 10 / (10 + overcap);
         if (!uiState.isShopVisible)
         {
-            
+
             if (Random.Range(0, (int)(120 * capacityproblem)) == 0) MouthBubb(0.5f);
             if (Random.Range(0, (int)(800 * capacityproblem)) == 0) ArseBubb(1f);
         }
         AnimationStuff();
 
-        transform.position += (V3) movedir * speed *
+        transform.position += (V3)movedir * speed *
             (1 + dTurtle.inventory.GetTotalLevels(UpgradeType.Speed) / 5) *
             capacityproblem;
 
@@ -170,7 +170,8 @@ public class sukeltajascript : MonoBehaviour
 
     public void Hurt(float damage, V3 impulse)
     {
-        if (damage >= 0){
+        if (damage >= 0)
+        {
             damage /= 1 + dTurtle.inventory.GetTotalLevels(UpgradeType.Toughness) / 5;
 
             GetComponent<AudioSource>().pitch = 1 + Random.Range(0.1f, 0.1f);
@@ -197,7 +198,7 @@ public class sukeltajascript : MonoBehaviour
         }
         //if (animpos > 6) animpos -= 6;
         float animposo = Mathf.Repeat(animpos, 6);
-        if (derp < (int)((animpos + soundplace)/6))
+        if (derp < (int)((animpos + soundplace) / 6))
         {
             GetComponent<AudioSource>().clip = armclips[Random.Range(0, 3)];
             GetComponent<AudioSource>().volume = (movedir != V2.zero) ? 0.4f : 0.2f;
@@ -235,20 +236,15 @@ public class sukeltajascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             uiState.isBarVisible = !uiState.isBarVisible;
             UpdateUIs();
-            return;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Kakkaa();
-            
+        if (uiState.isShopVisible) return; // we in shop. no move, only stay
 
-        }
+        if (Input.GetKeyDown(KeyCode.A)) Kakkaa();
 
         movedir = V2.zero;
         if (Input.GetKey(KeyCode.UpArrow))
