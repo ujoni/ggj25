@@ -205,9 +205,9 @@ public class UIState
     public bool isBarVisible = true;
 
     [SerializeField]
-    public StyleEnum<Visibility> barVisibilityStyle
+    public StyleEnum<DisplayStyle> barDisplayStyle
     {
-        get { return isBarVisible ? Visibility.Visible : Visibility.Hidden; }
+        get { return isBarVisible ? DisplayStyle.Flex : DisplayStyle.None; }
     }
 
     [SerializeField]

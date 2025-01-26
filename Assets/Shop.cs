@@ -88,6 +88,13 @@ public class Shop : MonoBehaviour
 
     public void CloseShop()
     {
+        var sukeltaja = FindFirstObjectByType<sukeltajascript>();
+        if (sukeltaja != null)
+        {
+            // update turtles possessions
+            sukeltaja.dTurtle.inventory = dShop.inventory.GetCopy();
+            sukeltaja.dTurtle.shells = dShop.shells;
+        }
         var uiDocument = GetComponent<UIDocument>();
         uiDocument.enabled = false;
     }
