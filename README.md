@@ -4,7 +4,9 @@
 
 Global Game Jam -25 game with the theme of "Bubble".
 
-In this game, you are a deep-diving sea turtle looking for legenday pearl from the depths of the sea caverns (?!).
+In this game, you play as a marine turtle navigating through a procedurally generated tunnel structure. 
+Your objective is to find a large pearl to bring back to your significant turtle.
+To reach deeper areas, you need to collect seashells to purchase upgrades from a friendly otter shopkeeper.
 
 ### Diversifiers
 
