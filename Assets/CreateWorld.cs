@@ -220,7 +220,7 @@ public class CreateWorld : MonoBehaviour
         else if (n.x < hole.x) {
             p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -70);
         }
-        //WorldObjects.Add(p);
+        WorldObjects.Add(p);
         
     }
 
