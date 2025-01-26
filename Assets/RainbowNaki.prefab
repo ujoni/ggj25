@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: -4615088499744538889}
   - component: {fileID: -1508259760738172304}
   - component: {fileID: 8121437566568298531}
+  - component: {fileID: 3787891755255670102}
+  - component: {fileID: 7243911844769256834}
   m_Layer: 10
   m_Name: RainbowNaki
   m_TagString: Untagged
@@ -31,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.03, y: -3.66, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2218327604235021028, guid: eec319a05857b9f408cfd09a1da15073, type: 3}
+  m_Sprite: {fileID: 2372651805560265800, guid: 6fbb8dae1f2711e4b8f1e4b99906895c, type: 3}
   m_Color: {r: 1, g: 0, b: 0.82404375, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -139,8 +141,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.44
+  m_Offset: {x: 0.16806602, y: -0.50419855}
+  m_Radius: 3.8013225
 --- !u!50 &-1508259760738172304
 Rigidbody2D:
   serializedVersion: 5
@@ -180,3 +182,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6f8864d462e254c8442e4c9e47b56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  strength: 0
+--- !u!114 &3787891755255670102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652971959218878440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cddc698bbd5050b4892f9704ed36a37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 0.3
+--- !u!114 &7243911844769256834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652971959218878440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b663694a75aca148acf3ab45abbf9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dems:
+  - {fileID: 2372651805560265800, guid: 6fbb8dae1f2711e4b8f1e4b99906895c, type: 3}
+  - {fileID: -8024018599206314248, guid: e84887d3320ec654e84b78223da8d609, type: 3}
+  - {fileID: -1906056644704717387, guid: 9926aea2d36dae342965f1a176d123cd, type: 3}

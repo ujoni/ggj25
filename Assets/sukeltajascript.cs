@@ -1,10 +1,9 @@
-using System.Numerics;
-//using Unity.VisualScripting;
 using UnityEngine;
-using System.Linq;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using System.Linq;
 public class sukeltajascript : MonoBehaviour
 {
 
@@ -17,24 +16,41 @@ public class sukeltajascript : MonoBehaviour
     public bool bodycollect;
     float lastflip;
 
-    KuplaMittariScript mittari;
     public GameObject bubb;
 
     public TurtleData dTurtle = new TurtleData();
     public Sprite[] images;
+
+    public float startY;
+
+    UIDocument statusUI;
+    UIDocument shopUI;
+    bool uiFlip = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         animpos = 0;
 
-        var ui = FindFirstObjectByType<UIDocument>();
-        var turtleBar = ui.rootVisualElement.Children().First().Children().Single(element => element.viewDataKey == "TurtleBar");
+        var UIs = FindObjectsByType<UIDocument>(FindObjectsSortMode.None);
+        statusUI = UIs.First(ui => ui.name == "StatusUI");
+        shopUI = UIs.First(ui => ui.name == "ShopUI");
+        SetUIs();
+        var turtleBar = statusUI.rootVisualElement.Q<VisualElement>("TurtleBar");
         turtleBar.dataSource = dTurtle;
 
         //mittari = GameObject.Find("Mittari").GetComponent<KuplaMittariScript>();
         speed = 0.2f;
         sivusuunta = 1;
+
+        startY = transform.position.y + 16;
+    }
+
+    void SetUIs()
+    {
+        statusUI.gameObject.SetActive(!uiFlip);
+        shopUI.gameObject.SetActive(uiFlip);
     }
 
     void Bubb()
@@ -43,10 +59,10 @@ public class sukeltajascript : MonoBehaviour
         go.transform.position = transform.GetChild(0).position + V3.right * 0.7f * sivusuunta;
         go.GetComponent<Rigidbody2D>().linearVelocity = V3.right * sivusuunta * 2 + (V3)movedir * 0.5f + (V3)Random.insideUnitCircle * 0.1f;
 
-        float r = Random.Range(0.7f, 0.9f);
+        float r = Random.Range(0.7f, 1f);
         go.transform.localScale = new V3(r * go.transform.localScale.x,
             r * go.transform.localScale.y, 1);
-        Destroy(go, 10 + 20 * Random.Range(0f, 1f));
+        Destroy(go, 2 + 3 * Random.Range(0f, 1f));
     }
 
     void Fart()
@@ -55,10 +71,10 @@ public class sukeltajascript : MonoBehaviour
         go.transform.position = transform.position - transform.right * 1.65f * sivusuunta;
         go.GetComponent<Rigidbody2D>().linearVelocity = V3.left * sivusuunta * 2 - (V3)movedir * 0.5f + (V3)Random.insideUnitCircle * 0.1f;
 
-        float r = Random.Range(0.8f, 1.1f);
+        float r = Random.Range(0.8f, 1.2f);
         go.transform.localScale = new V3(r * go.transform.localScale.x,
             r * go.transform.localScale.y, 1);
-        Destroy(go, 10 + 20 * Random.Range(0f, 1f));
+        Destroy(go, 4 + 8 * Random.Range(0f, 1f));
     }
 
     void MouthBubb(float oxy)
@@ -137,15 +153,14 @@ public class sukeltajascript : MonoBehaviour
             UnityEngine.Quaternion.Euler(0, 0, Mathf.Lerp(r, end, 0.2f));
 
 
-
-
+        dTurtle.depth = Mathf.Floor(startY - transform.position.y);
     }
 
     public void Hurt(float damage, V3 impulse)
     {
         MouthBubb(damage);
         if (damage > 0)
-            GetComponent<Rigidbody2D>().AddForce(impulse*1000);
+            GetComponent<Rigidbody2D>().AddForce(impulse * 1000);
     }
 
     void AnimationStuff()
@@ -191,6 +206,14 @@ public class sukeltajascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            uiFlip = !uiFlip;
+            SetUIs();
+            return;
+        }
+
         movedir = V2.zero;
         if (Input.GetKey(KeyCode.UpArrow))
         {

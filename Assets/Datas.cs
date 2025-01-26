@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 
 public enum UpgradeType
@@ -18,7 +16,7 @@ public enum UpgradeType
 [Serializable]
 public class TurtleUpgrade
 {
-    private static readonly Dictionary<UpgradeType, float> pricePerType = new()
+    private static readonly Dictionary<UpgradeType, int> pricePerType = new()
     {
         { UpgradeType.CarryingCapacity, 5 },
         { UpgradeType.OxygenMaximum, 12 },
@@ -41,7 +39,7 @@ public class TurtleUpgrade
     }
 
     [SerializeField]
-    public float price
+    public int price
     {
         get { return level * pricePerType[type]; }
     }
@@ -50,6 +48,18 @@ public class TurtleUpgrade
     public StyleEnum<Visibility> visible
     {
         get { return type != UpgradeType.None ? new(Visibility.Visible) : new(Visibility.Hidden); }
+    }
+
+    public void Reset()
+    {
+        level = 0;
+        type = UpgradeType.None;
+    }
+
+    public void CopyTo(ref TurtleUpgrade another)
+    {
+        another.level = level;
+        another.type = type;
     }
 
     public static string LevelToString(int level)
@@ -74,11 +84,10 @@ public class TurtleUpgrade
     public static void LoadIcons()
     {
         Debug.Log("Loading icons like a baus");
-        var asset = Resources.Load<Sprite>("ball");
-        texturePerType.Add(UpgradeType.CarryingCapacity, asset);
-        texturePerType.Add(UpgradeType.OxygenMaximum, asset);
-        texturePerType.Add(UpgradeType.Speed, asset);
-        texturePerType.Add(UpgradeType.Toughness, asset);
+        texturePerType.Add(UpgradeType.CarryingCapacity, Resources.Load<Sprite>("upgrade_carry"));
+        texturePerType.Add(UpgradeType.OxygenMaximum, Resources.Load<Sprite>("upgrade_happi"));
+        texturePerType.Add(UpgradeType.Speed, Resources.Load<Sprite>("upgrade_speed"));
+        texturePerType.Add(UpgradeType.Toughness, Resources.Load<Sprite>("upgrade_power"));
         texturePerType.Add(UpgradeType.None, null);
     }
 }
@@ -87,7 +96,9 @@ public class TurtleUpgrade
 [Serializable]
 public class TurtleInventory
 {
-    public TurtleUpgrade[] upgrades = new TurtleUpgrade[13];
+    public TurtleUpgrade[] upgrades = new TurtleUpgrade[13]{
+        new(), new(), new(), new(), new(), new(), new(), new(), new(), new(), new(), new(), new(),
+    };
 
     public bool AddUpgrade(TurtleUpgrade u)
     {
@@ -107,8 +118,23 @@ public class TurtleInventory
 
     public void ClearSlot(int slot)
     {
-        upgrades[slot].level = 0;
-        upgrades[slot].type = UpgradeType.None;
+        upgrades[slot].Reset();
+    }
+
+    public int GetTotalLevels(UpgradeType forType)
+    {
+        return upgrades.Where(u => u.type == forType).Aggregate(0, (acc, u) => acc + u.level);
+    }
+
+    public TurtleInventory GetCopy()
+    {
+        TurtleInventory n = new();
+        for (int i = 0; i < upgrades.Count(); i++)
+        {
+            if (upgrades[i] != null) upgrades[i].CopyTo(ref n.upgrades[i]);
+            else n.upgrades[i] = new();
+        }
+        return n;
     }
 
     private int NextSlot()
@@ -120,12 +146,24 @@ public class TurtleInventory
 [Serializable]
 public class TurtleData
 {
-    public float speed = 0;
     public int shells = 0;
     public float depth = 0;
-    public float oxygen = 100f;
-    public float maxOxygen = 100f;
-    public float carryingCapacity = 100f;
+    public float oxygen = 20;
+    [SerializeField]
+    public int maxOxygen
+    {
+        get { return 20 + inventory.GetTotalLevels(UpgradeType.OxygenMaximum) * 10; }
+    }
+    [SerializeField]
+    public int carryingCapacity
+    {
+        get { return 20 + inventory.GetTotalLevels(UpgradeType.CarryingCapacity) * 10; }
+    }
+    [SerializeField]
+    public int maxSpeed
+    {
+        get { return 20 + inventory.GetTotalLevels(UpgradeType.Speed) * 10; }
+    }
     public TurtleInventory inventory = new();
 }
 
@@ -148,7 +186,7 @@ public class CollectableData
 [Serializable]
 public class ShopData
 {
-    public int shopDepth = 0;
+    public int shells = 0;
     public List<TurtleUpgrade> items = new();
     public TurtleInventory inventory = new();
 }
@@ -159,11 +197,11 @@ public class UIConverters
     [UnityEditor.InitializeOnLoadMethod]
     public static void InitConverters()
     {
-        ConverterGroup g = new("shop");
+        ConverterGroup shopGroup = new("shop");
 
-        g.AddConverter((ref int level) => TurtleUpgrade.LevelToString(level));
-        g.AddConverter((ref UpgradeType type) => TurtleUpgrade.TypeToString(type));
+        shopGroup.AddConverter((ref int level) => TurtleUpgrade.LevelToString(level));
+        shopGroup.AddConverter((ref UpgradeType type) => TurtleUpgrade.TypeToString(type));
 
-        ConverterGroups.RegisterConverterGroup(g);
+        ConverterGroups.RegisterConverterGroup(shopGroup);
     }
 }
