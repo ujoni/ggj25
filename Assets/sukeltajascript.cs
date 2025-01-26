@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 public class sukeltajascript : MonoBehaviour
 {
     public GameObject kakka;
+    GameObject saukke;
 
     public AudioClip[] armclips;
     public AudioClip[] hurtclips;
@@ -247,13 +248,23 @@ public class sukeltajascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(uiState.isBarVisible);
         var canActuateShop = touchingShop || uiState.isShopVisible;
         if (canActuateShop && Input.GetKeyDown(KeyCode.Space))
         {
+            if (uiState.isBarVisible){
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                saukke.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            }else{
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                saukke.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                transform.position = savepos;
+            }
             uiState.isBarVisible = !uiState.isBarVisible;
             UpdateUIs();
         }
 
+        if (Input.GetKeyDown(KeyCode.I)) GameObject.Find("KEkk").GetComponent<AnimateExpla>().Toggle();
         if (Input.GetKey(KeyCode.Y) &&
             Input.GetKey(KeyCode.E) &&
             Input.GetKey(KeyCode.S)) {
@@ -332,7 +343,10 @@ public class sukeltajascript : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collider)
     {
         var saukko = collider.gameObject.GetComponent<SaukkoScript>();
-        if (saukko != null) touchingShop = true;
+        if (saukko != null) {
+            touchingShop = true;
+            saukke = saukko.gameObject;
+        }
     }
 
     void OnCollisionExit2D(Collision2D collider)
