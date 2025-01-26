@@ -11,6 +11,7 @@ public class sukeltajascript : MonoBehaviour
     public GameObject kakka;
 
     public AudioClip[] armclips;
+    public AudioClip[] hurtclips;
     V2 movedir;
     float speed;
     int sivusuunta;
@@ -109,6 +110,11 @@ public class sukeltajascript : MonoBehaviour
         {
             Fart();
         }
+
+        GetComponent<AudioSource>().pitch = 1 + Random.Range(0.1f, 0.1f);
+        GetComponent<AudioSource>().clip = hurtclips[1];
+        GetComponent<AudioSource>().volume = 0.3f;
+        GetComponent<AudioSource>().Play();
     }
 
     void FixedUpdate()
@@ -164,8 +170,14 @@ public class sukeltajascript : MonoBehaviour
 
     public void Hurt(float damage, V3 impulse)
     {
-        if (damage >= 0)
+        if (damage >= 0){
             damage /= 1 + dTurtle.inventory.GetTotalLevels(UpgradeType.Toughness) / 5;
+
+            GetComponent<AudioSource>().pitch = 1 + Random.Range(0.1f, 0.1f);
+            GetComponent<AudioSource>().clip = hurtclips[0];
+            GetComponent<AudioSource>().volume = 1;
+            GetComponent<AudioSource>().Play();
+        }
         MouthBubb(damage);
         if (damage > 0)
             GetComponent<Rigidbody2D>().AddForce(impulse * 1000);

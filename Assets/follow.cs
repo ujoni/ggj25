@@ -14,7 +14,7 @@ public class follow : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        var wannabe = followed.transform.position - V3.forward*30;
+        var wannabe = followed.transform.position - V3.forward * GetComponent<CameraLogic>().backwant;
         
         
         float distance = V3.Distance(transform.position, wannabe);

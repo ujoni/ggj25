@@ -15,7 +15,7 @@ public class AudioLogic : MonoBehaviour
         // bottom = 0
         top = GameObject.Find("Top").transform.position.y;
 
-        transform.Find("Ambient").GetComponent<AudioSource>().volume = 0.7f;
+        transform.Find("Ambient").GetComponent<AudioSource>().volume = 0.5f;
 
     }
 
@@ -29,10 +29,10 @@ public class AudioLogic : MonoBehaviour
         if (depth > 1) depth = 1;
 
         float depth2_vol = UnitClamp(depth, 0.1f, 0.2f);
-        transform.Find("Depth2").GetComponent<AudioSource>().volume = depth2_vol * 0.7f;
+        transform.Find("Depth2").GetComponent<AudioSource>().volume = depth2_vol * 0.5f;
 
         float depth3_vol = UnitClamp(depth, 0.2f, 0.4f);
-        transform.Find("Depth3").GetComponent<AudioSource>().volume = depth3_vol * 0.7f;
+        transform.Find("Depth3").GetComponent<AudioSource>().volume = depth3_vol * 0.5f;
 
         Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, new V2(80, 80), 0);
 

@@ -1,3 +1,4 @@
+using System.Runtime.Serialization.Formatters;
 using UnityEngine;
 
 public class Collectable : MonoBehaviour
@@ -29,6 +30,17 @@ public class Collectable : MonoBehaviour
             collected = true;
             // GetComponent<SpriteRenderer>().color = Color.red;
             collider.gameObject.GetComponent<sukeltajascript>().Collect(cData);
+            if (GetComponent<AudioSource>()) {
+                GameObject tempAudio = new GameObject("TempAudio");
+                //tempAudio.transform.position = position;
+
+                AudioSource audioSource = tempAudio.AddComponent<AudioSource>();
+                audioSource.clip = GetComponent<AudioSource>().clip;
+                audioSource.Play();
+
+                // Destroy the temporary GameObject after the clip has finished playing
+                Destroy(tempAudio, audioSource.clip.length);
+            }
             Destroy(gameObject);
             
         }
