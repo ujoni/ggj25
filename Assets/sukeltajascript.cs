@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System;
 using Random = UnityEngine.Random;
+using UnityEngine.Jobs;
 public class sukeltajascript : MonoBehaviour
 {
     public GameObject kakka;
@@ -16,6 +17,7 @@ public class sukeltajascript : MonoBehaviour
     float speed;
     int sivusuunta;
     float wantrot;
+    V3 savepos;
 
     float animpos;
     public bool bodycollect;
@@ -40,6 +42,7 @@ public class sukeltajascript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        savepos = transform.position;
         animpos = 0;
 
         var UIs = FindObjectsByType<UIDocument>(FindObjectsSortMode.None);
@@ -121,6 +124,11 @@ public class sukeltajascript : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (dTurtle.oxygen <= 0) {
+            transform.position = savepos;
+            dTurtle.oxygen = dTurtle.maxOxygen;
+        }
+
         float overcap = Mathf.Max(0, dTurtle.shells - dTurtle.carryingCapacity);
         float capacityproblem = 10 / (10 + overcap);
         if (!uiState.isShopVisible)
@@ -184,6 +192,7 @@ public class sukeltajascript : MonoBehaviour
         MouthBubb(damage);
         if (damage > 0)
             GetComponent<Rigidbody2D>().AddForce(impulse * 1000);
+
     }
 
     void AnimationStuff()
@@ -329,7 +338,11 @@ public class sukeltajascript : MonoBehaviour
     void OnCollisionExit2D(Collision2D collider)
     {
         var saukko = collider.gameObject.GetComponent<SaukkoScript>();
-        if (saukko != null) touchingShop = false;
+        if (saukko != null)
+        {
+            savepos = transform.position;
+            touchingShop = false;
+        }
     }
 }
 
