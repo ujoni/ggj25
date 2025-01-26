@@ -97,6 +97,7 @@ public class sukeltajascript : MonoBehaviour
     void ArseBubb(float oxy)
     {
         dTurtle.oxygen -= oxy;
+        if (oxy <= 0) return;
 
         int amt = Random.Range((int)(4 * oxy), (int)(8 * oxy));
         if (amt > 30) amt = 30;
@@ -108,15 +109,20 @@ public class sukeltajascript : MonoBehaviour
 
     void FixedUpdate()
     {
+        float overcap = Mathf.Max(0, dTurtle.shells - dTurtle.carryingCapacity);
+        float capacityproblem = 10 / (10 + overcap);
         if (!uiState.isShopVisible)
         {
-            if (Random.Range(0, 120) == 0) MouthBubb(0.5f);
-            if (Random.Range(0, 800) == 0) ArseBubb(1f);
+            
+            if (Random.Range(0, (int)(120 * capacityproblem)) == 0) MouthBubb(0.5f);
+            if (Random.Range(0, (int)(800 * capacityproblem)) == 0) ArseBubb(1f);
         }
         AnimationStuff();
 
+        transform.position += (V3) movedir * speed *
+            (1 + dTurtle.inventory.GetTotalLevels(UpgradeType.Speed) / 5) *
+            capacityproblem;
 
-        transform.position += (V3)movedir * speed;
         if (movedir.x > 0)
         {
             //GetComponent<SpriteRenderer>().flipX = false;
@@ -154,6 +160,8 @@ public class sukeltajascript : MonoBehaviour
 
     public void Hurt(float damage, V3 impulse)
     {
+        if (damage >= 0)
+            damage /= 1 + dTurtle.inventory.GetTotalLevels(UpgradeType.Toughness) / 5;
         MouthBubb(damage);
         if (damage > 0)
             GetComponent<Rigidbody2D>().AddForce(impulse * 1000);
