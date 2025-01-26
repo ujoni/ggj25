@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Linq;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
+using Unity.Collections;
+using System.Net.Http.Headers;
 
 public class CreateWorld : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class CreateWorld : MonoBehaviour
     public Material maamat;
     public GameObject sukeltaja;
     public GameObject[] plants;
+    public GameObject helmisimpukka;
 
     public GameObject[] goodies;
     public float[] depthmins;
@@ -72,7 +75,11 @@ public class CreateWorld : MonoBehaviour
         int mains = 2; //Random.Range(1, 3);
         for (int i = 0; i < mains; i++)
         {
-            SubdivideThingo(new V2(startx, starty), new V2(Random.Range(SIZEX / 5, 4 * SIZEX / 5), 0));
+            V2 v = new V2(Random.Range(SIZEX / 5, 4 * SIZEX / 5), 0);
+            SubdivideThingo(new V2(startx, starty), v);
+            GameObject helmi = GameObject.Instantiate(helmisimpukka);
+            helmi.transform.position = CornerPoint(v.x, v.y);
+            WorldObjects.Add(helmi);
         }
 
         for (int i = 0; i < 20; i++)
@@ -118,12 +125,15 @@ public class CreateWorld : MonoBehaviour
             }
         }
 
-        CreateTerrain();
+        
 
         for (int i = 0; i < 120; i++)
         {
             MakePlant();
         }
+
+        RemoveExcessTerrain();
+        CreateTerrain();
 
         /*for (int g = 0; g < enemies.Length; g++){
             for (int i = 0; i < 50; i++){
@@ -134,6 +144,29 @@ public class CreateWorld : MonoBehaviour
         GameObject.Find("Enabler").GetComponent<EnablerScript>().objects = WorldObjects;
         //GameObject.Find("Enabler").GetComponent<EnablerScript>().Initialize();
 
+    }
+
+    void RemoveExcessTerrain(){
+        List<V2> allfulls = new List<V2>();
+        for (int ix = 0; ix < SIZEX; ix++)
+        {
+            for (int iy = 0; iy < SIZEY; iy++)
+            {
+                bool allfull = true;
+                for (int xx = -2; xx <= 2; xx++) {
+                    for (int yy = -2; yy <= 2; yy++) {
+                        if (GetGrid(grid, ix+xx, iy+yy) == 0){
+                            allfull = false;
+                            break;
+                        }
+                    }
+                }
+                if (allfull) allfulls.Add(new V2(ix, iy));
+            }
+        }
+        foreach(V2 v in allfulls) {
+            SetGrid(grid, v.x, v.y, 0);
+        }
     }
 
     void MakeGoodie(int g)
@@ -159,7 +192,7 @@ public class CreateWorld : MonoBehaviour
         int left = 1;
         int right = 1;
         int up = 1; 
-        int down = 1;
+        int down = 0;
 
         int xx = (int)x;
         int yy = (int)y;
@@ -215,10 +248,10 @@ public class CreateWorld : MonoBehaviour
         //print(v);
         p.transform.position = CornerPoint(v.x, v.y);
         if (n.x > hole.x) {
-            p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 70);
+            p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 80);
         }
         else if (n.x < hole.x) {
-            p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -70);
+            p.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -80);
         }
         WorldObjects.Add(p);
         
