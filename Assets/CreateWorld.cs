@@ -46,7 +46,7 @@ public class CreateWorld : MonoBehaviour
     void Start()
     {
         WorldObjects = new List<GameObject>();
-        Random.InitState(660);
+        Random.InitState(661);
 
         safes = new List<V2>();
         safenbrs = new List<V2>();
@@ -72,14 +72,16 @@ public class CreateWorld : MonoBehaviour
         // holes.Add(new V2(startx, starty)); // NOPE
         //SetGrid(grid, startx, starty, 0);
 
-        int mains = 2; //Random.Range(1, 3);
+        int mains = 3; //Random.Range(1, 3);
         for (int i = 0; i < mains; i++)
         {
-            V2 v = new V2(Random.Range(SIZEX / 5, 4 * SIZEX / 5), 0);
+            V2 v = new V2(Random.Range(SIZEX / 5, 4 * SIZEX / 5), 1);
             SubdivideThingo(new V2(startx, starty), v);
-            GameObject helmi = GameObject.Instantiate(helmisimpukka);
-            helmi.transform.position = CornerPoint(v.x, v.y);
-            WorldObjects.Add(helmi);
+            if (i == 0) {
+                GameObject helmi = GameObject.Instantiate(helmisimpukka);
+                helmi.transform.position = CornerPoint(v.x, v.y);
+                WorldObjects.Add(helmi);
+            }
         }
 
         for (int i = 0; i < 20; i++)
