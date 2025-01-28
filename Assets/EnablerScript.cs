@@ -29,7 +29,7 @@ public class EnablerScript : MonoBehaviour
         c = 0;
          
          foreach(GameObject obj in objects){
-            print(obj);
+            //print(obj);
             InActonate(obj);
          }
          //print(rootobjects.Count);

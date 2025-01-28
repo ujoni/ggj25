@@ -45,6 +45,7 @@ public class CreateWorld : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        float timme = Time.realtimeSinceStartup;
         WorldObjects = new List<GameObject>();
         //Random.InitState(661);
 
@@ -72,6 +73,9 @@ public class CreateWorld : MonoBehaviour
         // holes.Add(new V2(startx, starty)); // NOPE
         //SetGrid(grid, startx, starty, 0);
 
+        print("zeroing: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
+
         int mains = 3; //Random.Range(1, 3);
         for (int i = 0; i < mains; i++)
         {
@@ -85,17 +89,26 @@ public class CreateWorld : MonoBehaviour
             }
         }
 
+        print("mains: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
+
         for (int i = 0; i < 20; i++)
         {
             CreateRandomSturmPath(Random.Range(15, 40));
             CreateRandomPath();
         }
 
+        print("sturm paths: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
+
         for (int i = 0; i < 20; i++)
         {
             CreateRandomSturmPath(Random.Range(5, 15));
             CreateRandomPath();
         }
+
+        print("short sturm paths: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
 
         /*for (int i = 0; i < 10; i++){
             
@@ -112,11 +125,17 @@ public class CreateWorld : MonoBehaviour
             }
         }
 
+        print("goodies: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
+
         //grid[startx+1, starty-1] = 0;
         for (int i = 0; i < 20; i++)
         {
             CreateRandomBlob();
         }
+
+        print("blobs: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
 
         // make big goodies
         for (int g = 0; g < goodies.Length; g++)
@@ -128,15 +147,26 @@ public class CreateWorld : MonoBehaviour
             }
         }
 
-
+        print("big goodies: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
 
         for (int i = 0; i < 120; i++)
         {
             MakePlant();
         }
 
+        print("plants: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
+
         RemoveExcessTerrain();
+
+        print("zeroing: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
+
         CreateTerrain();
+
+        print("creating terrain: " + (Time.realtimeSinceStartup - timme));
+        timme = Time.realtimeSinceStartup;
 
         /*for (int g = 0; g < enemies.Length; g++){
             for (int i = 0; i < 50; i++){
@@ -156,12 +186,15 @@ public class CreateWorld : MonoBehaviour
         {
             for (int iy = 0; iy < SIZEY; iy++)
             {
+                bool safe = true;
+                if (ix == 0 || ix == SIZEX-1 || iy == 0 || iy == SIZEY-1) safe = false;
                 bool allfull = true;
-                for (int xx = -2; xx <= 2; xx++)
+                for (int xx = -1; xx <= 1; xx++)
                 {
-                    for (int yy = -2; yy <= 2; yy++)
+                    for (int yy = -1; yy <= 1; yy++)
                     {
-                        if (GetGrid(grid, ix + xx, iy + yy) == 0)
+                        
+                        if (GetGrid(grid, ix + xx, iy + yy, safe) == 0)
                         {
                             allfull = false;
                             break;
@@ -173,7 +206,7 @@ public class CreateWorld : MonoBehaviour
         }
         foreach (V2 v in allfulls)
         {
-            SetGrid(grid, v.x, v.y, 0);
+            SetGrid(grid, v.x, v.y, 0, true, false);
         }
     }
 
@@ -398,20 +431,31 @@ public class CreateWorld : MonoBehaviour
         return false;
     }
 
-    void SetGrid(int[,] grid, float x, float y, int v)
+    void SetGrid(int[,] grid, float x, float y, int v, bool safe, bool addholes)
     {
-        x = (int)x;
-        y = (int)y;
-        if (badcoord((int)x, (int)y)) return;
-        grid[(int)x, (int)y] = v;
-        if (!holes.Contains(new V2(x, y))) holes.Add(new V2(x, y));
+        int xx = (int)x;
+        int yy = (int)y;
+        if (!safe){
+            
+            if (badcoord(xx, yy)) return;
+        }
+        grid[xx, yy] = v;
+        if (addholes && v == 0 && !holes.Contains(new V2(xx, yy))) holes.Add(new V2(xx, yy));
+    }
+    void SetGrid(int[,] grid, float x, float y, int v, bool safe){
+        SetGrid(grid, x, y, v, safe, true);
+    }
+    void SetGrid(int[,] grid, float x, float y, int v){
+        SetGrid(grid, x, y, v, false, true);
     }
 
-    public int GetGrid(int[,] grid, float x, float y)
+    public int GetGrid(int[,] grid, float x, float y, bool safe)
     {
-        if (badcoord((int)x, (int)y)) return 1;
-
+        if (!safe && badcoord((int)x, (int)y)) return 1;
         return grid[(int)x, (int)y];
+    }
+    public int GetGrid(int[,] grid, float x, float y){
+        return GetGrid(grid, x, y, false);
     }
 
     // go through non-0 components 

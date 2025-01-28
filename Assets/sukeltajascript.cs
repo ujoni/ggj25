@@ -248,7 +248,7 @@ public class sukeltajascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(uiState.isBarVisible);
+        //print(uiState.isBarVisible);
         var canActuateShop = touchingShop || uiState.isShopVisible;
         if (canActuateShop && Input.GetKeyDown(KeyCode.Space))
         {

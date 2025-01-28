@@ -12,8 +12,6 @@ public class CameraFadeScript : MonoBehaviour
         // bottom = 0
         top = GameObject.Find("Top").transform.position.y;
 
-        transform.Find("Ambient").GetComponent<AudioSource>().volume = 0.7f;
-
     }
     
     void Update()
