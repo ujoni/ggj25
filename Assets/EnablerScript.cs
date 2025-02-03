@@ -4,6 +4,8 @@ using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 using TMPro;
 
+// enabler script activates and inactivates all creatures based on distance from player
+// never destroys or creates anything though
 public class EnablerScript : MonoBehaviour
 {
     public List<GameObject> objects;
@@ -18,7 +20,12 @@ public class EnablerScript : MonoBehaviour
 
     void Start(){
         //loggero = GameObject.Find("Loggero");
-        Initialize();
+        //Initialize();
+    }
+
+    public void Add(GameObject obj){
+        objects.Add(obj);
+        InActonate(obj);
     }
     public void Initialize()
     {
@@ -40,11 +47,12 @@ public class EnablerScript : MonoBehaviour
         acts = 0;
         Collider2D[] colls = Physics2D.OverlapBoxAll(player.transform.position, new V2(80, 80), 0);
         foreach (Collider2D coll in colls) {
-            if (objects.Contains(coll.gameObject)){
-                if (coll.gameObject.GetComponent<Renderer>().enabled == false) acts += 1;
-                Actonate(coll.gameObject);
+            GameObject obj = Helpers.Root(coll.transform).gameObject;
+            if (objects.Contains(obj)){
+                //if (coll.gameObject.GetComponent<Renderer>().enabled == false) acts += 1;
+                Actonate(obj);
                 
-                if (!actives.Contains(coll.gameObject)) actives.Add(coll.gameObject);
+                if (!actives.Contains(obj)) actives.Add(obj);
             }
         }
         //print(actives.Count);
@@ -52,16 +60,15 @@ public class EnablerScript : MonoBehaviour
     }
 
     void InActivateFar() {
-         inacts = 0;
+        inacts = 0;
         List<GameObject> newactives = new List<GameObject>();
         foreach (GameObject obj in actives) {
             if (obj == null) {
                 inacts += 1;
                 continue;
-                
             }
             if (V3.Distance(obj.transform.position, player.transform.position) > 80){
-                if (obj.GetComponent<Renderer>().enabled == true) inacts += 1;
+                //if (obj.GetComponent<Renderer>().enabled == true) inacts += 1;
                 InActonate(obj);
             }
             else {
@@ -72,27 +79,27 @@ public class EnablerScript : MonoBehaviour
     }
 
     void Actonate(GameObject go){
-        MonoBehaviour[] monos = go.GetComponents<MonoBehaviour>();
+        MonoBehaviour[] monos = go.GetComponentsInChildren<MonoBehaviour>();
         foreach(MonoBehaviour mono in monos){
             mono.enabled = true;
         }
-        foreach(Renderer r in go.GetComponents<Renderer>()) {
+        foreach(Renderer r in go.GetComponentsInChildren<Renderer>()) {
             r.enabled = true;
         }
-        foreach(Rigidbody2D rb in go.GetComponents<Rigidbody2D>()) {
+        foreach(Rigidbody2D rb in go.GetComponentsInChildren<Rigidbody2D>()) {
             rb.bodyType = RigidbodyType2D.Dynamic;
         }
     }
 
     void InActonate(GameObject go){
-        MonoBehaviour[] monos = go.GetComponents<MonoBehaviour>();
+        MonoBehaviour[] monos = go.GetComponentsInChildren<MonoBehaviour>();
         foreach(MonoBehaviour mono in monos){
             mono.enabled = false;
         }
-        foreach(Renderer r in go.GetComponents<Renderer>()) {
+        foreach(Renderer r in go.GetComponentsInChildren<Renderer>()) {
             r.enabled = false;
         }
-        foreach(Rigidbody2D rb in go.GetComponents<Rigidbody2D>()) {
+        foreach(Rigidbody2D rb in go.GetComponentsInChildren<Rigidbody2D>()) {
             rb.bodyType = RigidbodyType2D.Static;
         }
     }

@@ -264,6 +264,19 @@ public class sukeltajascript : MonoBehaviour
             UpdateUIs();
         }
 
+        if (Input.GetKeyDown(KeyCode.C)) {
+            TurtleUpgrade t = new TurtleUpgrade();
+            t.type = UpgradeType.Speed;
+            t.level = 10;
+            dTurtle.inventory.AddUpgrade(t);
+            TurtleUpgrade t2 = new TurtleUpgrade();
+            t2.type = UpgradeType.OxygenMaximum;
+            t2.level = 100;
+            dTurtle.inventory.AddUpgrade(t2);
+            dTurtle.oxygen = 1000;
+            GetComponent<Collider2D>().enabled = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.I)) GameObject.Find("KEkk").GetComponent<AnimateExpla>().Toggle();
         if (Input.GetKey(KeyCode.Y) &&
             Input.GetKey(KeyCode.E) &&
@@ -311,8 +324,9 @@ public class sukeltajascript : MonoBehaviour
         if (dTurtle.shells <= 0) return;
         dTurtle.shells -= 1;
         GameObject k = GameObject.Instantiate(kakka);
-        k.transform.position = transform.position - transform.right * 1.65f * sivusuunta;
+        k.transform.position = transform.position - transform.right * 1.65f * sivusuunta + (V3)Random.insideUnitCircle*0.05f;
         k.GetComponent<Collectable>().timeout = Time.time + 3;
+        GameObject.Find("Enabler").GetComponent<EnablerScript>().objects.Add(k);
     }
 
     public void Collect(CollectableData c)

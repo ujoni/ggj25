@@ -1,0 +1,77 @@
+kompassi
+kaikuluotaus kuuluu saukosta?
+kuumat kuplat
+should average speed and take turtle rotation from that
+shells are not on top of ground
+Submarine strangely pops in and out of existence, one reason is the destruction when other appear,
+	but also happens when coming out of shop, and in the very start¨
+Helpompi saukon avaus
+Viholliset puree kaupassa
+Nopeuden käyrä on huono
+Happi täyteen kun tulee pois saukosta
+Piraijan väri selkeämmäksi
+Puhallus 
+Kakan yhdistyminen
+Kuplien myös
+Ei rahaa indikaattori
+Megalodon
+Fast travel
+Kalat jotka tykkää kakasta
+Mustekala piiloutuu
+Selkeämpi indikaattori eli minimap ominaisuutena
+Kompassi
+Pimeät kentät
+Taskulamput
+Musajuttu, konfliktit ja priority
+Joskus ei voi ostaa??
+Pallo
+Ripuli
+Kakka-ase
+Tarkista miten kauan menee abstraktissa generoinnissa ja erottele konrettisesta
+Enemy editor, sandbox
+Kakat world objecteihin
+Ei-ylimmät generoinnit
+Siirrä tiedostoon kentän generointidatat
+Sukeltaja + tölkit
+Tausta ja bordercollie minimapille
+Ohuenpi kun vähemmän happea
+mulkut kasvit
+vinkkiviestit kenttien vläillä
+objektit ilmestyy usein minimapille liian myöhään
+minimapin ei pitäis pitää kirjaa abstraktista positiosta vaan jonkun erillisen härpäkkeen
+turtlen rotaatioissa on jotain outoa, esim. kun kuolee niin joskus 20 rotaatiota säilyy pitkään
+välillä siirrä kalat sun muut pois seinän sisältä
+mahdollisesti joskus piraijat tai vastaavat ei näy?? menin alas ja kuolin yhtäkkiä
+vähemmän happea kun ei liiku
+kotilot vois liikkua
+- verkko, johon jää sekä kilppari, että kalat kiinni
+- happikasvien näköisiä kasveja, mutta ovatkin lonkerohirviöitä, jotka kävelee juuriensa avulla ja syö lähelle tulevia herkkuja
+- eri tasoisia kaloja
+skaalaa metrit ja varmista että voi mennä 5000 metriin 
+outo viiva jossain kohtaa, ilmeisesti vesitekstuureissa reikä
+hait pyörii hulluna, tee siitä harvinainen moodi
+suojaus tatuointina ja kipu vain raajoihin?
+elma-ohjaus mahdolliseksi
+valikko jonka voi pelissä avata
+seinän hajoaminen
+auto eat on/off
+lentävä iso kotiloteditorissa min/max level vihollisille, lerppaa kivasti
+it should be a level generation mode how much we remove ground from around
+outermost should be type 2 ground i.e. unbreakable, once that exists
+yläreiän kohdalla ei ole reunasquiggleja tiilillä
+voisi säätää sitä maan collideria
+olisi kiva jos taivasta näkisi enemmän, kun sitä kuitenkin on olemassa
+probably holes.contains checks should be removed?
+oxygen can stack over max, but like logarithmically
+
+
+MAYBE DONES:
+Seinän läpi voi mennä kovaa
+Kakat maan läpi
+
+
+DONES:
+Meduusat ei liiku
+bunchit hienostuneemmiksi, vielä yks level niihin? <- koko generointia nyt uudistetaan, joten tämän unohdan
+käännä kalat <- done
+Generoi vain osa kentästä <- done
