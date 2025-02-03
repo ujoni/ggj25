@@ -4,20 +4,24 @@ using UnityEngine;
 using V2 = UnityEngine.Vector2;
 using V3 = UnityEngine.Vector3;
 
+/*
+    Currently this keeps track of player's abstract position in grid.
+*/
 public class MinimapScript : MonoBehaviour
 {
     public GameObject block;
 
     // discrete pos of player
-    V2 pos;
+    public V2 pos;
     CreateWorld cw;
     GameObject player;
 
     GameObject[,] grid;
-    int left; 
-    int top; 
-    int width; 
-    int height; 
+
+    public int left; 
+    public int top; 
+    public int width; 
+    public int height; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
