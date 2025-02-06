@@ -1,3 +1,4 @@
+kalat katsoo taas mihin sattuu
 kompassi
 kaikuluotaus kuuluu saukosta?
 kuumat kuplat
@@ -29,7 +30,10 @@ Ripuli
 Kakka-ase
 Tarkista miten kauan menee abstraktissa generoinnissa ja erottele konrettisesta
 Enemy editor, sandbox
+<<<<<<< Updated upstream
 Kakat world objecteihin
+=======
+>>>>>>> Stashed changes
 Ei-ylimmät generoinnit
 Siirrä tiedostoon kentän generointidatat
 Sukeltaja + tölkit
@@ -41,7 +45,10 @@ objektit ilmestyy usein minimapille liian myöhään
 minimapin ei pitäis pitää kirjaa abstraktista positiosta vaan jonkun erillisen härpäkkeen
 turtlen rotaatioissa on jotain outoa, esim. kun kuolee niin joskus 20 rotaatiota säilyy pitkään
 välillä siirrä kalat sun muut pois seinän sisältä
+<<<<<<< Updated upstream
 mahdollisesti joskus piraijat tai vastaavat ei näy?? menin alas ja kuolin yhtäkkiä
+=======
+>>>>>>> Stashed changes
 vähemmän happea kun ei liiku
 kotilot vois liikkua
 - verkko, johon jää sekä kilppari, että kalat kiinni
@@ -74,4 +81,10 @@ DONES:
 Meduusat ei liiku
 bunchit hienostuneemmiksi, vielä yks level niihin? <- koko generointia nyt uudistetaan, joten tämän unohdan
 käännä kalat <- done
+<<<<<<< Updated upstream
 Generoi vain osa kentästä <- done
+=======
+Generoi vain osa kentästä <- done
+Kakat world objecteihin
+mahdollisesti joskus piraijat tai vastaavat ei näy?? menin alas ja kuolin yhtäkkiä
+>>>>>>> Stashed changes
