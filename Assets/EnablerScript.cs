@@ -84,7 +84,7 @@ public class EnablerScript : MonoBehaviour
             mono.enabled = true;
         }
         foreach(Renderer r in go.GetComponentsInChildren<Renderer>()) {
-            r.enabled = true;
+            //r.enabled = true;
         }
         foreach(Rigidbody2D rb in go.GetComponentsInChildren<Rigidbody2D>()) {
             rb.bodyType = RigidbodyType2D.Dynamic;
@@ -97,7 +97,7 @@ public class EnablerScript : MonoBehaviour
             mono.enabled = false;
         }
         foreach(Renderer r in go.GetComponentsInChildren<Renderer>()) {
-            r.enabled = false;
+            //r.enabled = false;
         }
         foreach(Rigidbody2D rb in go.GetComponentsInChildren<Rigidbody2D>()) {
             rb.bodyType = RigidbodyType2D.Static;

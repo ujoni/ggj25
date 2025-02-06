@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1499055964139950013}
   - component: {fileID: -578277138108804606}
   - component: {fileID: 1994557186662890925}
+  - component: {fileID: 6113037064360118804}
   m_Layer: 0
   m_Name: koral2
   m_TagString: Untagged
@@ -138,3 +139,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.07532942, y: -0.51527166}
   m_Radius: 0.8628136
+--- !u!114 &6113037064360118804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3448380786066976092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4ffa50a5b5d7a458c557a05e1ee1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

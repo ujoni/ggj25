@@ -72,7 +72,7 @@ public class CreateWorld : MonoBehaviour
         c = 0;
         terrainMap = new Dictionary<V2, GameObject>();
         // how far do we generate terrain? this must be big enough so active enemies don't fly outside
-        generationSize = 14;
+        generationSize = 60; //14;
         minimap = GameObject.Find("MiniMap").GetComponent<MinimapScript>();
         float timme = Time.realtimeSinceStartup;
         WorldObjects = new List<GameObject>();
@@ -214,7 +214,7 @@ public class CreateWorld : MonoBehaviour
                 print("LevelObjects/" + l.objects[g].objectName);
                 GameObject goodie = (GameObject)Resources.Load("LevelObjects/" + l.objects[g].objectName);
                 print(goodie);
-                if (bigs ^ (goodie.GetComponent<BigScript>() != null)) continue;
+                if (bigs ^ (goodie.GetComponent<BigScript>() != null || goodie.GetComponent<PlantScript>() != null)) continue;
                 int amount = Random.Range(l.objects[g].minAmount, l.objects[g].maxAmount+1);
                 print(amount);
                 for (int i = 0; i < amount; i++) {
@@ -295,21 +295,59 @@ public class CreateWorld : MonoBehaviour
 
     void MakeGoodie(GameObject g, ObjectGenerationDescription ogd)
     {
-        int depth = (int)(SIZEY - 1 - Helpers.RandomWithSlope(ogd.mindepth, ogd.maxdepth, ogd.depthslope) * SIZEY);
+        print("making goodies");
+        print(ogd.objectName);
+        print(ogd.mindepth);
+        print(ogd.maxdepth);
+        print(ogd.depthslope);
+        int depth = (int)(SIZEY - 1 -
+        Helpers.RandomWithSlope(ogd.mindepth, ogd.maxdepth, ogd.depthslope) * (SIZEY - 1));
+        print(depth);
+
         if (!holesByHeight.ContainsKey(depth))
         {
             print("Failed to instantiate " + ogd.objectName + " at height " + depth + ".");
             return;
         }
+        bool isplant = g.GetComponent<PlantScript>() != null;
         V2 pos = Helpers.RandomChoice(holesByHeight[depth]);
-
         int amt = Random.Range(ogd.minBunch, ogd.maxBunch + 1);
         for (int t = 0; t < amt; t++)
         {
             GameObject good = GameObject.Instantiate(g);
             WorldObjects.Add(good);
-            good.transform.position = CornerPoint(pos.x + Random.Range(-0.45f, 0.45f),
-                pos.y + Random.Range(-0.45f, 0.45f));
+            if (isplant)
+            {
+                print("is plant");
+                if (ogd.minBunch != 1 || ogd.maxBunch != 1) print("Plant bunches don't work.");
+                V2 n = nbrof(pos, pos + V2.up);
+                print(n);
+                /*if (GetGrid(grid, n.x, n.y) != 1) {
+                    MakeGoodie(g, ogd);
+                    return;
+                }*/
+                while (GetGrid(grid, n.x, n.y) != 1)
+                {
+                    print("retry");
+                    pos = Helpers.RandomChoice(holesByHeight[depth]);
+                    n = nbrof(pos, pos + V2.up);
+                }
+                V2 v = (pos + n) / 2 + Random.Range(-0.45f, 0.45f) * Helpers.TurnLeft(n - pos);
+                good.transform.position = CornerPoint(v.x, v.y);
+                if (n.x > pos.x)
+                {
+                    good.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, 80);
+                }
+                else if (n.x < pos.x)
+                {
+                    good.transform.rotation = UnityEngine.Quaternion.Euler(0, 0, -80);
+                }
+            }
+            else
+            {
+                good.transform.position = CornerPoint(pos.x + Random.Range(-0.45f, 0.45f),
+                    pos.y + Random.Range(-0.45f, 0.45f));
+            }
         }
 
         /*V2 hole = holes[Random.Range(0, holes.Count)];
@@ -375,6 +413,7 @@ public class CreateWorld : MonoBehaviour
 
     void MakePlant()
     {
+        if (loadgoodiesfromfile) return;
         V2 hole = holes[Random.Range(0, holes.Count)];
         V2 n = nbrof(hole, hole + V2.up);
         float kuplamin = SIZEY * Random.Range(0f, 1f);
